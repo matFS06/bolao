@@ -27,7 +27,7 @@
             <button type="submit" class="btn btn-success w-100">Cadastrar</button>
         </form>
         <div id="mensagem" class="mt-3"></div>
-        <p class="text-center mt-3">Já tem conta? <a href="bolao.html">Entrar</a></p>
+        <p class="text-center mt-3">Já tem conta? <a href="index.html">Entrar</a></p>
     </div>
 </div>
 
@@ -75,7 +75,7 @@
             msg.innerHTML = `<div class="alert alert-danger">Erro ao cadastrar: ${insertError.message}</div>`;
         } else {
             msg.innerHTML = `<div class="alert alert-success">✅ Cadastrado! Redirecionando...</div>`;
-            setTimeout(() => window.location.href = './bolao.html', 1500);
+            setTimeout(() => window.location.href = './index.html', 1500);
         }
     });
 </script>
