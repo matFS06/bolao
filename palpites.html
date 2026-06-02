@@ -104,7 +104,6 @@
                             <label class="form-label">Autor do 1º gol do Brasil:</label>
                             <select class="form-select" id="autorGol" required>
                                 <option value="">Selecione...</option>
-                                <option>Neymar</option><option>Vini Jr</option><option>Endrik</option><option>Raphinha</option>
                             </select>
                         </div>
 
@@ -380,6 +379,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // CHAMADA AQUI: Popular as listas após o formulário ser criado
     popularSelectsSelecoes();
+    popularAutorGol();
 });
 
 // 2. Ajuste a função de verificação para forçar o display
@@ -420,6 +420,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const usuario = localStorage.getItem('usuarioLogado'); // ou a forma que você pega o user
     verificarPalpiteExistente(usuario);
 });
+
+    function popularAutorGol() {
+        const todosJogadores = [
+            "Alisson", "Ederson", "Weverton", // Goleiros
+            "Alex Sandro", "Bremer", "Danilo", "Douglas Santos", "Gabriel Magalhães", "Ibañez", "Léo Pereira", "Marquinhos", "Wesley", // Defensores
+            "Bruno Guimarães", "Casemiro", "Danilo Santos", "Fabinho", "Lucas Paquetá", // Meio-campistas
+            "Endrick", "Gabriel Martinelli", "Igor Thiago", "Luiz Henrique", "Matheus Cunha", "Neymar", "Raphinha", "Rayan", "Vini Jr." // Atacantes
+        ].sort(); // O .sort() coloca em ordem alfabética automaticamente
+
+        const select = document.getElementById('autorGol');
+
+        todosJogadores.forEach(jogador => {
+            const option = document.createElement('option');
+            option.value = jogador;
+            option.textContent = jogador;
+            select.appendChild(option);
+        });
+    }
 
     // 4. FUNÇÃO PARA PREENCHER GRUPOS
     function carregarGrupos() {
