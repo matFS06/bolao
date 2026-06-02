@@ -65,7 +65,7 @@
         e.preventDefault();
         
         const btn = document.getElementById("btnEntrar");
-        const username = document.getElementById("usernameInput").value.trim().toLowerCase();
+        const username = document.getElementById("usernameInput").value.trim();
         const password = document.getElementById("passwordInput").value;
 
         btn.disabled = true;
@@ -90,7 +90,7 @@
                 localStorage.setItem("bolao_user", username);
                 
                 alert(`👋 Bem-vindo de volta, ${data[0].nome_completo}!`);
-                window.location.href = "./palpites.html"; 
+                window.location.href = "./menu.html"; 
             } else {
                 // Se o retorno vier vazio, as credenciais estão erradas
                 alert("❌ Usuário ou senha incorretos! Verifique os dados ou crie uma nova conta.");
