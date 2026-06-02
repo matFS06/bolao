@@ -8,13 +8,18 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body { background-color: #f4f7f6; }
-        .group-header { background-color: #198754; color: white; padding: 10px; border-radius: 8px 8px 0 0; }
+        .group-header { background-color: #198754; color: white; padding: 10px; border-radius: 8px 8px 0 0; font-weight: bold; }
+        .card-custom { border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body class="p-4">
 
 <div class="container" style="max-width: 800px;">
     <h2 class="text-success fw-bold mb-4">🏆 Meus Palpites</h2>
+
+    <div id="divPontuacao" class="alert alert-success shadow-sm text-center fw-bold fs-4 mb-4" style="display: none;">
+        Carregando sua pontuação...
+    </div>
     
     <div id="loading" class="text-center my-5">
         <div class="spinner-border text-success" role="status"></div>
@@ -34,7 +39,6 @@
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY";
     const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Configuração dos jogos para exibir os placares
     const jogosConfig = {
         'a': ["México x R. Tcheca", "Coreia S. x África S.", "R. Tcheca x África S.", "México x Coreia S.", "África S. x Coreia S.", "R. Tcheca x México"],
         'b': ["Canadá x Bósnia", "Catar x Suíça", "Suíça x Bósnia", "Canadá x Catar", "Suíça x Canadá", "Bósnia x Catar"],
@@ -52,7 +56,7 @@
 
     document.addEventListener("DOMContentLoaded", async () => {
         const usuarioLogado = localStorage.getItem("bolao_user");
-        if (!usuarioLogado) { window.location.href = "./bolao.html"; return; }
+        if (!usuarioLogado) { window.location.href = "./index.html"; return; }
 
         const { data, error } = await db
             .from('palpitescopa')
@@ -60,6 +64,7 @@
             .eq('nome_usuario', usuarioLogado);
 
         const container = document.getElementById('resultadoPalpites');
+        const divPontos = document.getElementById('divPontuacao');
         document.getElementById('loading').style.display = 'none';
 
         if (error) {
@@ -68,9 +73,14 @@
             container.innerHTML = `<div class="alert alert-info">Você ainda não enviou nenhum palpite.</div>`;
         } else {
             const p = data[data.length - 1];
+            
+            // Exibir pontuação
+            divPontos.style.display = 'block';
+            divPontos.innerText = `📊 Sua pontuação atual: ${p.pontuacao || 0} pontos`;
+
             let html = `<h4>Olá, <strong>${usuarioLogado}</strong>!</h4><hr>`;
             
-            // 1. Exibir Grupos (1º e 2º lugar)
+            // 1. Grupos
             html += `<div class="row">`;
             const letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'];
             letras.forEach(letra => {
@@ -84,7 +94,7 @@
             });
             html += `</div>`;
 
-            // 2. Exibir Placares dos Jogos (A, B, C...)
+            // 2. Placares
             html += `<h5 class="mt-4">Placares dos Jogos:</h5>`;
             for (let letra in jogosConfig) {
                 let offset = (letra.charCodeAt(0) - 97) * 6;
@@ -104,10 +114,10 @@
 
             // 3. Finais
             html += `
-            <div class="card mt-4 border-success">
+            <div class="card mt-4 border-success shadow-sm">
                 <div class="card-body">
-                    <h5 class="text-success">4 melhores e Gol</h5>
-                    <p>🏆 Campeão: <b>${p.campeao}</b> | 🥈 Vice: <b>${p.vice}</b></p>
+                    <h5 class="text-success fw-bold">🏆 Finais e Gol</h5>
+                    <p>🥇 Campeão: <b>${p.campeao}</b> | 🥈 Vice: <b>${p.vice}</b></p>
                     <p>🥉 3º Lugar: <b>${p.terceiro}</b> | 🏅 4º Lugar: <b>${p.quarto}</b></p>
                     <p>⚽ Autor do 1º Gol do Brasil: <b>${p.autor_gol}</b></p>
                 </div>
