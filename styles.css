@@ -1,0 +1,54 @@
+body { 
+    background-color: #f4f7f6; 
+}
+
+.card-custom { 
+    border-radius: 12px; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05); 
+    background: #fff; 
+    border: none; 
+}
+
+.match-row { 
+    align-items: center; 
+    padding: 10px 0; 
+    border-bottom: 1px solid #eee; 
+}
+
+.match-row:last-child { 
+    border-bottom: none; 
+}
+
+.score-input { 
+    width: 60px; 
+    text-align: center; 
+    font-weight: bold; 
+}
+
+.team-name { 
+    font-weight: 500; 
+}
+
+.hide { 
+    display: none !important; 
+}
+
+.btn-link {
+    text-decoration: none !important;
+}
+
+/* Cores de Pódio para o Ranking */
+.podium-1 { 
+    color: #ffd700; 
+    font-weight: bold; 
+}
+
+.podium-2 { 
+    color: #c0c0c0; 
+    font-weight: bold; 
+}
+
+.podium-3 { 
+    color: #cd7f32; 
+    font-weight: bold; 
+}

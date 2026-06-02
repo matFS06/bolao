@@ -3,373 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bolão da Copa - Ranking de Usuários</title>
+    <title>Bolão da Copa - Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body { background-color: #f4f7f6; }
+        body { background-color: #f4f7f6; display: flex; align-items: center; min-height: 100vh; }
         .card-custom { border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); background: #fff; border: none; }
-        .match-row { align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; }
-        .match-row:last-child { border-bottom: none; }
-        .score-input { width: 60px; text-align: center; font-weight: bold; }
-        .team-name { font-weight: 500; }
-        .hide { display: none !important; }
-        
-        /* Estilos do pódio de usuários */
-        .podium-rank { font-size: 1.25rem; font-weight: bold; width: 40px; }
-        .pos-1 { color: #ffd700; } /* Ouro */
-        .pos-2 { color: #c0c0c0; } /* Prata */
-        .pos-3 { color: #cd7f32; } /* Bronze */
     </style>
 </head>
 <body>
 
-<div class="container my-5" style="max-width: 900px;">
-
-    <div id="loginScreen" class="row justify-content-center my-5">
-        <div class="col-md-6">
-            <div class="card card-custom p-4 text-center">
-                <h2 class="fw-bold text-success mb-3">🏆 Bolão da Copa</h2>
-                <p class="text-muted">Entre com seu usuário para dar palpites e ver o ranking</p>
-                <form id="loginForm">
-                    <div class="mb-3 text-start">
-                        <label class="form-label fw-bold">Usuário de Acesso</label>
-                        <input type="text" id="usernameInput" class="form-control form-control-lg" placeholder="Ex: joao_silva" required>
-                    </div>
-                    <button type="submit" class="btn btn-success btn-lg w-100 shadow">Entrar no Sistema</button>
-                </form>
+<div class="container" style="max-width: 500px;">
+    <div class="card card-custom p-4 text-center">
+        <h2 class="fw-bold text-success mb-3">🏆 Bolão da Copa</h2>
+        <p class="text-muted">Entre com suas credenciais para dar palpites</p>
+        
+        <form id="loginForm">
+            <div class="mb-3 text-start">
+                <label class="form-label fw-bold">Usuário de Acesso</label>
+                <input type="text" id="usernameInput" class="form-control form-control-lg" placeholder="Ex: joao_silva" required>
             </div>
-        </div>
+            
+            <div class="mb-3 text-start">
+                <label class="form-label fw-bold">Senha</label>
+                <input type="password" id="passwordInput" class="form-control form-control-lg" placeholder="Digite sua senha" required>
+            </div>
+
+            <button type="submit" id="btnEntrar" class="btn btn-success btn-lg w-100 shadow mb-3">Entrar no Sistema</button>
+        </form>
+
+        <hr>
+        
+        <p class="mb-0 text-muted">
+            Não tem uma conta? <a href="./cadastro.html" class="text-success fw-bold text-decoration-none">Criar conta agora</a>
+        </p>
     </div>
-
-    <div id="mainDashboard" class="hide">
-        <div class="d-flex justify-content-between align-items-center mb-4 bg-white p-3 rounded shadow-sm">
-            <div>
-                <span class="text-muted">Logado como:</span>
-                <h4 class="fw-bold text-success mb-0" id="welcomeUser">@usuario</h4>
-            </div>
-            <button class="btn btn-outline-danger btn-sm" onclick="logout()">Sair</button>
-        </div>
-
-        <div class="row g-3 mb-4 text-center">
-            <div class="col-6">
-                <button id="btnGoBets" class="btn btn-success btn-lg w-100 py-3 shadow-sm fw-bold" onclick="showSection('bets')">
-                    📝 Submeter Palpites
-                </button>
-            </div>
-            <div class="col-6">
-                <button id="btnGoRanking" class="btn btn-outline-success btn-lg w-100 py-3 shadow-sm fw-bold" onclick="showSection('ranking')">
-                    📊 Ver Classificação Geral
-                </button>
-            </div>
-        </div>
-
-        <div id="sectionBets" class="hide">
-            <form id="betForm">
-                <div id="groupsContainer"></div>
-                <div class="text-center my-4">
-                    <button type="submit" class="btn btn-success btn-lg px-5 shadow">🚀 Salvar Meus Palpites</button>
-                </div>
-            </form>
-        </div>
-
-        <div id="sectionRanking" class="hide">
-            <div class="card card-custom p-4">
-                <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
-                    <h4 class="fw-bold text-success mb-0">🏆 Ranking Geral dos Participantes</h4>
-                    <span class="badge bg-secondary">Regra: Placar Exato = 5pts | Acertou Vencedor/Empate = 2pts</span>
-                </div>
-                
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0">
-                        <thead class="table-light text-center">
-                            <tr>
-                                <th style="width: 10%;">Pos</th>
-                                <th class="text-start" style="width: 50%;">Participante</th>
-                                <th style="width: 20%;">Palpites Feitos</th>
-                                <th style="width: 20%;">Pontuação Total</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userRankingBody">
-                            </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    // Todos os jogos do torneio
-    const tournamentData = {
-        "A": [
-            { id: "a1", team1: "México", team2: "África do Sul" }, { id: "a2", team1: "Coreia do Sul", team2: "Rep. Tcheca" },
-            { id: "a3", team1: "República Tcheca", team2: "África do Sul" }, { id: "a4", team1: "México", team2: "Coreia do Sul" },
-            { id: "a5", team1: "África do Sul", team2: "Coreia do Sul" }, { id: "a6", team1: "República Tcheca", team2: "México" }
-        ],
-        "B": [
-            { id: "b1", team1: "Canadá", team2: "Bósnia" }, { id: "b2", team1: "Catar", team2: "Suíça" },
-            { id: "b3", team1: "Suíça", team2: "Bósnia" }, { id: "b4", team1: "Canadá", team2: "Catar" },
-            { id: "b5", team1: "Suíça", team2: "Canadá" }, { id: "b6", team1: "Bósnia", team2: "Catar" }
-        ],
-        "C": [
-            { id: "c1", team1: "Brasil", team2: "Marrocos" }, { id: "c2", team1: "Haiti", team2: "Escócia" },
-            { id: "c3", team1: "Escócia", team2: "Marrocos" }, { id: "c4", team1: "Brasil", team2: "Haiti" },
-            { id: "c5", team1: "Marrocos", team2: "Haiti" }, { id: "c6", team1: "Escócia", team2: "Brasil" }
-        ],
-        "D": [
-            { id: "d1", team1: "Estados Unidos", team2: "Paraguai" }, { id: "d2", team1: "Austrália", team2: "Turquia" },
-            { id: "d3", team1: "Estados Unidos", team2: "Austrália" }, { id: "d4", team1: "Turquia", team2: "Paraguai" },
-            { id: "d5", team1: "Turquia", team2: "Estados Unidos" }, { id: "d6", team1: "Paraguai", team2: "Austrália" }
-        ],
-        "E": [
-            { id: "e1", team1: "Alemanha", team2: "Curaçao" }, { id: "e2", team1: "Costa do Marfim", team2: "Equador" },
-            { id: "e3", team1: "Alemanha", team2: "Costa do Marfim" }, { id: "e4", team1: "Equador", team2: "Curaçao" },
-            { id: "e5", team1: "Equador", team2: "Alemanha" }, { id: "e6", team1: "Curaçao", team2: "Costa do Marfim" }
-        ],
-        "F": [
-            { id: "f1", team1: "Holanda", team2: "Japão" }, { id: "f2", team1: "Suécia", team2: "Tunísia" },
-            { id: "f3", team1: "Holanda", team2: "Suécia" }, { id: "f4", team1: "Tunísia", team2: "Japão" },
-            { id: "f5", team1: "Tunísia", team2: "Holanda" }, { id: "f6", team1: "Japão", team2: "Suécia" }
-        ],
-        "G": [
-            { id: "g1", team1: "Bélgica", team2: "Egito" }, { id: "g2", team1: "Irã", team2: "Nova Zelândia" },
-            { id: "g3", team1: "Bélgica", team2: "Irã" }, { id: "g4", team1: "Nova Zelândia", team2: "Egito" },
-            { id: "g5", team1: "Egito", team2: "Irã" }, { id: "g6", team1: "Nova Zelândia", team2: "Bélgica" }
-        ],
-        "H": [
-            { id: "h1", team1: "Espanha", team2: "Cabo Verde" }, { id: "h2", team1: "Arábia Saudita", team2: "Uruguai" },
-            { id: "h3", team1: "Espanha", team2: "Arábia Saudita" }, { id: "h4", team1: "Uruguai", team2: "Cabo Verde" },
-            { id: "h5", team1: "Cabo Verde", team2: "Arábia Saudita" }, { id: "h6", team1: "Uruguai", team2: "Espanha" }
-        ],
-        "I": [
-            { id: "i1", team1: "França", team2: "Senegal" }, { id: "i2", team1: "Iraque", team2: "Noruega" },
-            { id: "i3", team1: "França", team2: "Iraque" }, { id: "i4", team1: "Noruega", team2: "Senegal" },
-            { id: "i5", team1: "Senegal", team2: "Iraque" }, { id: "i6", team1: "Noruega", team2: "França" }
-        ],
-        "J": [
-            { id: "j1", team1: "Argentina", team2: "Argélia" }, { id: "j2", team1: "Áustria", team2: "Jordânia" },
-            { id: "j3", team1: "Argentina", team2: "Áustria" }, { id: "j4", team1: "Jordânia", team2: "Argélia" },
-            { id: "j5", team1: "Jordânia", team2: "Argentina" }, { id: "j6", team1: "Argélia", team2: "Áustria" }
-        ],
-        "K": [
-            { id: "k1", team1: "Portugal", team2: "RD do Congo" }, { id: "k2", team1: "Uzbequistão", team2: "Colômbia" },
-            { id: "k3", team1: "Portugal", team2: "Uzbequistão" }, { id: "k4", team1: "Colômbia", team2: "RD do Congo" },
-            { id: "k5", team1: "RD do Congo", team2: "Uzbequistão" }, { id: "k6", team1: "Colômbia", team2: "Portugal" }
-        ],
-        "L": [
-            { id: "l1", team1: "Inglaterra", team2: "Croácia" }, { id: "l2", team1: "Gana", team2: "Panamá" },
-            { id: "l3", team1: "Inglaterra", team2: "Gana" }, { id: "l4", team1: "Panamá", team2: "Croácia" },
-            { id: "l5", team1: "Croácia", team2: "Gana" }, { id: "l6", team1: "Panamá", team2: "Inglaterra" }
-        ]
-    };
+    const SUPABASE_URL = "https://phirqisfutnwqhhswjxh.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY";
+    
+    let supabaseClient;
 
-    // Gabarito - Resultados reais simulados da Copa para calcular os pontos do ranking
-    const realResults = {
-        "a1": { s1: 2, s2: 1 }, "a2": { s1: 0, s2: 0 }, "a3": { s1: 1, s2: 2 }, "a4": { s1: 3, s2: 1 },
-        "c1": { s1: 2, s2: 0 }, "c4": { s1: 4, s2: 0 }, "l1": { s1: 1, s2: 1 }
-        // Outros jogos pendentes/não ocorridos contam 0 pontos para todo mundo.
-    };
+    // Garante a inicialização correta independente do tipo de carregamento do navegador
+    try {
+        if (typeof supabase !== 'undefined') {
+            supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        } else if (typeof Supabase !== 'undefined') {
+            supabaseClient = Supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        } else {
+            throw new Error("Biblioteca do Supabase não foi carregada pelo navegador.");
+        }
+    } catch (e) {
+        alert("❌ Erro ao iniciar o Banco no Login:\n" + e.message);
+    }
 
-    // Usuários mockados de fábrica para popular a tabela inicialmente
-    const mockUsers = ["lucas_silva", "marcos_99", "ana_clara"];
-    const mockBets = {
-        "lucas_silva": { "a1": { s1: 2, s2: 1 }, "a2": { s1: 1, s2: 0 }, "c1": { s1: 2, s2: 0 } }, // acertou 2 cheios
-        "marcos_99": { "a1": { s1: 1, s2: 0 }, "a2": { s1: 0, s2: 0 }, "c1": { s1: 3, s2: 1 } },  // acertou vencedores e 1 cheio
-        "ana_clara": { "a1": { s1: 0, s2: 2 }, "a2": { s1: 2, s2: 1 }, "c1": { s1: 1, s2: 1 } }   // errou a maioria
-    };
+    // Evento de Login
+    document.getElementById("loginForm").addEventListener("submit", async function(e) {
+        e.preventDefault();
+        
+        const btn = document.getElementById("btnEntrar");
+        const username = document.getElementById("usernameInput").value.trim().toLowerCase();
+        const password = document.getElementById("passwordInput").value;
 
-    document.addEventListener("DOMContentLoaded", function() {
-        initMockData();
-        renderFormBets();
-        checkLogin();
+        btn.disabled = true;
+        btn.innerText = "Verificando credenciais...";
 
-        // Login
-        document.getElementById("loginForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const username = document.getElementById("usernameInput").value.trim().toLowerCase();
-            if(username) {
+        try {
+            // Consulta no Supabase procurando pelo usuário e senha exatos
+            const { data, error } = await supabaseClient
+                .from('palpiteiro')
+                .select('usuario, nome_completo')
+                .eq('usuario', username)
+                .eq('senha', password);
+
+            if (error) {
+                alert("❌ Erro ao consultar o banco: " + error.message);
+                return;
+            }
+
+            // Se retornar dados (data.length > 0), o login é válido
+            if (data && data.length > 0) {
+                // Armazena o usuário atual no localStorage para uso nas próximas telas (ex: palpites.html)
                 localStorage.setItem("bolao_user", username);
-                checkLogin();
-            }
-        });
-
-        // Enviar Palpites
-        document.getElementById("betForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            const currentUser = localStorage.getItem("bolao_user");
-            let predictions = {};
-
-            for (const group in tournamentData) {
-                tournamentData[group].forEach(match => {
-                    const s1 = document.querySelector(`input[name="score_${match.id}_1"]`).value;
-                    const s2 = document.querySelector(`input[name="score_${match.id}_2"]`).value;
-                    if (s1 !== "" && s2 !== "") {
-                        predictions[match.id] = { s1: parseInt(s1), s2: parseInt(s2) };
-                    }
-                });
+                
+                alert(`👋 Bem-vindo de volta, ${data[0].nome_completo}!`);
+                window.location.href = "./palpites.html"; 
+            } else {
+                // Se o retorno vier vazio, as credenciais estão erradas
+                alert("❌ Usuário ou senha incorretos! Verifique os dados ou crie uma nova conta.");
             }
 
-            localStorage.setItem(`bets_${currentUser}`, JSON.stringify(predictions));
-            
-            // Adiciona na lista de participantes se for novo
-            let participants = JSON.parse(localStorage.getItem("bolao_participants") || "[]");
-            if(!participants.includes(currentUser)) {
-                participants.push(currentUser);
-                localStorage.setItem("bolao_participants", JSON.stringify(participants));
-            }
-
-            alert("Seus palpites foram computados!");
-            buildUserRanking();
-            showSection('ranking');
-        });
+        } catch (err) {
+            alert("❌ Erro de rede ao tentar fazer login: " + err.message);
+        } finally {
+            btn.disabled = false;
+            btn.innerText = "Entrar no Sistema";
+        }
     });
-
-    function initMockData() {
-        if (!localStorage.getItem("bolao_participants")) {
-            localStorage.setItem("bolao_participants", JSON.stringify(mockUsers));
-            mockUsers.forEach(u => {
-                localStorage.setItem(`bets_${u}`, JSON.stringify(mockBets[u]));
-            });
-        }
-    }
-
-    function checkLogin() {
-        const user = localStorage.getItem("bolao_user");
-        if (user) {
-            document.getElementById("loginScreen").classList.add("hide");
-            document.getElementById("mainDashboard").classList.remove("hide");
-            document.getElementById("welcomeUser").innerText = `@${user}`;
-            loadUserBets(user);
-            buildUserRanking();
-            showSection('bets');
-        } else {
-            document.getElementById("loginScreen").classList.remove("hide");
-            document.getElementById("mainDashboard").classList.add("hide");
-        }
-    }
-
-    function logout() {
-        localStorage.removeItem("bolao_user");
-        checkLogin();
-    }
-
-    function showSection(section) {
-        if(section === 'bets') {
-            document.getElementById("sectionBets").classList.remove("hide");
-            document.getElementById("sectionRanking").classList.add("hide");
-            document.getElementById("btnGoBets").className = "btn btn-success btn-lg w-100 py-3 shadow-sm fw-bold";
-            document.getElementById("btnGoRanking").className = "btn btn-outline-success btn-lg w-100 py-3 shadow-sm fw-bold";
-        } else {
-            document.getElementById("sectionBets").classList.add("hide");
-            document.getElementById("sectionRanking").classList.remove("hide");
-            document.getElementById("btnGoBets").className = "btn btn-outline-success btn-lg w-100 py-3 shadow-sm fw-bold";
-            document.getElementById("btnGoRanking").className = "btn btn-success btn-lg w-100 py-3 shadow-sm fw-bold";
-            buildUserRanking();
-        }
-    }
-
-    function renderFormBets() {
-        const container = document.getElementById("groupsContainer");
-        container.innerHTML = "";
-        for (const group in tournamentData) {
-            let html = `<div class="card card-custom p-4 mb-4">
-                            <h4 class="text-success border-bottom pb-2 mb-3 fw-bold">Grupo ${group}</h4>`;
-            tournamentData[group].forEach(match => {
-                html += `
-                    <div class="row match-row text-center">
-                        <div class="col-4 text-end team-name">${match.team1}</div>
-                        <div class="col-4 d-flex justify-content-center align-items-center gap-2">
-                            <input type="number" min="0" class="form-control score-input" name="score_${match.id}_1" placeholder="-">
-                            <span class="fw-bold text-muted">X</span>
-                            <input type="number" min="0" class="form-control score-input" name="score_${match.id}_2" placeholder="-">
-                        </div>
-                        <div class="col-4 text-start team-name">${match.team2}</div>
-                    </div>`;
-            });
-            html += `</div>`;
-            container.innerHTML += html;
-        }
-    }
-
-    function loadUserBets(user) {
-        const saved = localStorage.getItem(`bets_${user}`);
-        if(saved) {
-            const predictions = JSON.parse(saved);
-            for(const id in predictions) {
-                const input1 = document.querySelector(`input[name="score_${id}_1"]`);
-                const input2 = document.querySelector(`input[name="score_${id}_2"]`);
-                if(input1 && input2) {
-                    input1.value = predictions[id].s1;
-                    input2.value = predictions[id].s2;
-                }
-            }
-        }
-    }
-
-    // Regra de negócios para cálculo do ranking de usuários
-    function buildUserRanking() {
-        const participants = JSON.parse(localStorage.getItem("bolao_participants") || "[]");
-        let rankingList = [];
-
-        participants.forEach(user => {
-            const savedBets = localStorage.getItem(`bets_${user}`);
-            const bets = savedBets ? JSON.parse(savedBets) : {};
-            
-            let totalPoints = 0;
-            let totalBetsCount = Object.keys(bets).length;
-
-            // Percorre os palpites que o usuário fez e compara com o gabarito (realResults)
-            for(const matchId in bets) {
-                if(realResults[matchId]) {
-                    const p1 = bets[matchId].s1;
-                    const p2 = bets[matchId].s2;
-                    const r1 = realResults[matchId].s1;
-                    const r2 = realResults[matchId].s2;
-
-                    // 1. Acerto em cheio (Placar Exato) = 5 pontos
-                    if(p1 === r1 && p2 === r2) {
-                        totalPoints += 5;
-                    } 
-                    // 2. Acerto de tendência (Vencedor ou Empate com placar diferente) = 2 pontos
-                    else if((p1 > p2 && r1 > r2) || (p2 > p1 && r2 > r1) || (p1 === p2 && r1 === r2)) {
-                        totalPoints += 2;
-                    }
-                }
-            }
-
-            rankingList.push({ username: user, points: totalPoints, count: totalBetsCount });
-        });
-
-        // Ordena por pontuação de forma decrescente
-        rankingList.sort((a, b) => b.points - a.points);
-
-        // Renderiza as linhas na tabela
-        const tbody = document.getElementById("userRankingBody");
-        tbody.innerHTML = "";
-
-        rankingList.forEach((player, index) => {
-            let posDisplay = index + 1;
-            let iconClass = "";
-            
-            // Colores do pódio para os 3 primeiros colocados
-            if(posDisplay === 1) iconClass = "pos-1";
-            if(posDisplay === 2) iconClass = "pos-2";
-            if(posDisplay === 3) iconClass = "pos-3";
-
-            tbody.innerHTML += `
-                <tr class="text-center">
-                    <td class="podium-rank ${iconClass}">${posDisplay}º</td>
-                    <td class="text-start fw-bold text-secondary">@${player.username}</td>
-                    <td><span class="badge bg-light text-dark border">${player.count} jogos</span></td>
-                    <td><span class="badge bg-success p-2 fs-6">${player.points} Pts</span></td>
-                </tr>
-            `;
-        });
-    }
 </script>
-
 </body>
 </html>
