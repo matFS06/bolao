@@ -84,11 +84,23 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card p-4">
+                <!-- Botão de Voltar -->
+                <a class="btn btn-outline-secondary btn-sm mb-3" 
+                onclick="window.location.replace('menu.html')" 
+                style="width: fit-content; cursor: pointer;">
+                ⬅️ Voltar ao Menu
+                </a>
                 <h2 class="text-center mb-4 text-success">⚽ Bolão da Copa - 2026</h2>
                 <div id="divFormulario" style="display: none;">
                 <form id="formBolao">
-                    <div class="mb-3">
-                        <p>Logado como: <strong id="displayUsuario"></strong></p>
+                    <div class="mb-4 p-3 bg-light border rounded d-flex justify-content-between align-items-center">
+                        <div>
+                            <small class="text-muted d-block">Logado como:</small>
+                            <strong id="displayUsuario" class="text-primary"></strong>
+                        </div>
+                        <button class="btn btn-sm btn-outline-danger" onclick="localStorage.removeItem('bolao_user'); window.location.href='index.html';">
+                            Sair
+                        </button>
                     </div>
 
                     <button class="btn btn-secondary w-100 mb-4" type="button" data-bs-toggle="collapse" data-bs-target="#palpitesGerais" aria-expanded="false" aria-controls="palpitesGerais">
@@ -139,8 +151,8 @@
 <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#palpitesGrupoA">⬇️ Palpites: Grupo A</button>
 <div class="collapse" id="palpitesGrupoA">
     <div class="grupo-container bg-light p-3 mb-3 border rounded">
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">México x Rep. Tcheca</div><div class="col-7"><input type="number" min="0" class="input-placar" name="a1_1" required> x <input type="number" min="0" class="input-placar" name="a1_2" required></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Coreia do Sul x África do Sul</div><div class="col-7"><input type="number" min="0" class="input-placar" name="a2_1" required> x <input type="number" min="0" class="input-placar" name="a2_2" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">México x África do Sul</div><div class="col-7"><input type="number" min="0" class="input-placar" name="a1_1" required> x <input type="number" min="0" class="input-placar" name="a1_2" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Coreia do Sul x Rep.Tcheca</div><div class="col-7"><input type="number" min="0" class="input-placar" name="a2_1" required> x <input type="number" min="0" class="input-placar" name="a2_2" required></div></div>
         <div class="row align-items-center mb-2 text-center"><div class="col-5">Rep. Tcheca x África do Sul</div><div class="col-7"><input type="number" min="0" class="input-placar" name="a3_1" required> x <input type="number" min="0" class="input-placar" name="a3_2" required></div></div>
         <div class="row align-items-center mb-2 text-center"><div class="col-5">México x Coreia do Sul</div><div class="col-7"><input type="number" min="0" class="input-placar" name="a4_1" required> x <input type="number" min="0" class="input-placar" name="a4_2" required></div></div>
         <div class="row align-items-center mb-2 text-center"><div class="col-5">África do Sul x Coreia do Sul</div><div class="col-7"><input type="number" min="0" class="input-placar" name="a5_1" required> x <input type="number" min="0" class="input-placar" name="a5_2" required></div></div>
@@ -150,12 +162,12 @@
 <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#palpitesGrupoB">⬇️ Palpites: Grupo B</button>
 <div class="collapse" id="palpitesGrupoB">
     <div class="grupo-container bg-light p-3 mb-3 border rounded">
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Canadá x Bósnia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b1_1" required> x <input type="number" min="0" class="input-placar" name="b1_2"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Catar x Suíça</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b2_1" required> x <input type="number" min="0" class="input-placar" name="b2_2"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Suíça x Bósnia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b3_1" required> x <input type="number" min="0" class="input-placar" name="b3_2"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Canadá x Catar</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b4_1" required> x <input type="number" min="0" class="input-placar" name="b4_2"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Suíça x Canadá</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b5_1" required> x <input type="number" min="0" class="input-placar" name="b5_2"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Bósnia x Catar</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b6_1" required> x <input type="number" min="0" class="input-placar" name="b6_2"></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Canadá x Bósnia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b1_1" required> x <input type="number" min="0" class="input-placar" name="b1_2" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Catar x Suíça</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b2_1" required> x <input type="number" min="0" class="input-placar" name="b2_2" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Suíça x Bósnia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b3_1" required> x <input type="number" min="0" class="input-placar" name="b3_2" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Canadá x Catar</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b4_1" required> x <input type="number" min="0" class="input-placar" name="b4_2" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Suíça x Canadá</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b5_1" required> x <input type="number" min="0" class="input-placar" name="b5_2" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Bósnia x Catar</div><div class="col-7"><input type="number" min="0" class="input-placar" name="b6_1" required> x <input type="number" min="0" class="input-placar" name="b6_2" required></div></div>
     </div>
 </div>
 
@@ -252,7 +264,7 @@
 <div class="collapse" id="palpitesGrupoE">
     <div class="grupo-container bg-light p-3 mb-3 border rounded">
         <div class="row align-items-center mb-2 text-center">
-            <div class="col-5">Alemanha x Curaçao</div>
+            <div class="col-5">Alemanha x Curaçau</div>
             <div class="col-7"><input type="number" min="0" class="input-placar" name="e1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="e1_2" style="width:50px" required></div>
         </div>
         <div class="row align-items-center mb-2 text-center">
@@ -264,7 +276,7 @@
             <div class="col-7"><input type="number" min="0" class="input-placar" name="e3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="e3_2" style="width:50px" required></div>
         </div>
         <div class="row align-items-center mb-2 text-center">
-            <div class="col-5">Equador x Curaçao</div>
+            <div class="col-5">Equador x Curaçau</div>
             <div class="col-7"><input type="number" min="0" class="input-placar" name="e4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="e4_2" style="width:50px" required></div>
         </div>
         <div class="row align-items-center mb-2 text-center">
@@ -272,7 +284,7 @@
             <div class="col-7"><input type="number" min="0" class="input-placar" name="e5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="e5_2" style="width:50px" required></div>
         </div>
         <div class="row align-items-center mb-2 text-center">
-            <div class="col-5">Curaçao x Costa do Marfim</div>
+            <div class="col-5">Curaçau x Costa do Marfim</div>
             <div class="col-7"><input type="number" min="0" class="input-placar" name="e6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="e6_2" style="width:50px" required></div>
         </div>
     </div>
@@ -280,78 +292,78 @@
 <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#palpitesGrupoF">⬇️ Palpites: Grupo F</button>
 <div class="collapse" id="palpitesGrupoF">
     <div class="grupo-container bg-light p-3 mb-3 border rounded">
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Holanda x Japão</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f1_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Suécia x Tunísia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f2_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Holanda x Suécia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f3_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Tunísia x Japão</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f4_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Tunísia x Holanda</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f5_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Japão x Suécia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f6_2" style="width:50px" ></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Holanda x Japão</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f1_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Suécia x Tunísia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f2_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Holanda x Suécia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f3_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Tunísia x Japão</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f4_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Tunísia x Holanda</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f5_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Japão x Suécia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="f6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="f6_2" style="width:50px" required></div></div>
     </div>
 </div>
 <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#palpitesGrupoG">⬇️ Palpites: Grupo G</button>
 <div class="collapse" id="palpitesGrupoG">
     <div class="grupo-container bg-light p-3 mb-3 border rounded">
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Bélgica x Egito</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g1_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Irã x N. Zelândia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g2_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Bélgica x Irã</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g3_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">N. Zelândia x Egito</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g4_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Egito x Irã</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g5_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">N. Zelândia x Bélgica</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g6_2" style="width:50px" ></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Bélgica x Egito</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g1_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Irã x N. Zelândia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g2_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Bélgica x Irã</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g3_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">N. Zelândia x Egito</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g4_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Egito x Irã</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g5_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">N. Zelândia x Bélgica</div><div class="col-7"><input type="number" min="0" class="input-placar" name="g6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="g6_2" style="width:50px" required></div></div>
     </div>
 </div>
 <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#palpitesGrupoH">⬇️ Palpites: Grupo H</button>
 <div class="collapse" id="palpitesGrupoH">
     <div class="grupo-container bg-light p-3 mb-3 border rounded">
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Espanha x C. Verde</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h1_2" style="width:50px"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Arábia Saudita x Uruguai</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h2_2" style="width:50px"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Espanha x Arábia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h3_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Uruguai x C. Verde</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h4_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">C. Verde x Arábia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h5_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Uruguai x Alemanha</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h6_2" style="width:50px" ></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Espanha x Cabo Verde</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h1_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Arábia Saudita x Uruguai</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h2_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Espanha x Arábia Saudita</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h3_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Uruguai x Cabo Verde</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h4_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Cabo Verde x Arábia Saudita</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h5_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Uruguai x Espanha</div><div class="col-7"><input type="number" min="0" class="input-placar" name="h6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="h6_2" style="width:50px" required></div></div>
     </div>
 </div>
 <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#palpitesGrupoI">⬇️ Palpites: Grupo I</button>
 <div class="collapse" id="palpitesGrupoI">
     <div class="grupo-container bg-light p-3 mb-3 border rounded">
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">França x Senegal</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i1_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Iraque x Noruega</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i2_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">França x Iraque</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i3_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Noruega x Senegal</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i4_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Senegal x Iraque</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i5_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Noruega x França</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i6_2" style="width:50px" ></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">França x Senegal</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i1_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Iraque x Noruega</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i2_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">França x Iraque</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i3_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Noruega x Senegal</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i4_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Senegal x Iraque</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i5_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Noruega x França</div><div class="col-7"><input type="number" min="0" class="input-placar" name="i6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="i6_2" style="width:50px" required></div></div>
     </div>
 </div>
 <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#palpitesGrupoJ">⬇️ Palpites: Grupo J</button>
 <div class="collapse" id="palpitesGrupoJ">
     <div class="grupo-container bg-light p-3 mb-3 border rounded">
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Argentina x Argélia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j1_2" style="width:50px"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Áustria x Jordânia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j2_2" style="width:50px"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Argentina x Áustria</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j3_2" style="width:50px"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Jordânia x Argélia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j4_2" style="width:50px"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Jordânia x Argentina</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j5_2" style="width:50px"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Argélia x Áustria</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j6_2" style="width:50px"></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Argentina x Argélia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j1_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Áustria x Jordânia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j2_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Argentina x Áustria</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j3_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Jordânia x Argélia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j4_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Jordânia x Argentina</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j5_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Argélia x Áustria</div><div class="col-7"><input type="number" min="0" class="input-placar" name="j6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="j6_2" style="width:50px" required></div></div>
     </div>
 </div>
 <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#palpitesGrupoK">⬇️ Palpites: Grupo K</button>
 <div class="collapse" id="palpitesGrupoK">
     <div class="grupo-container bg-light p-3 mb-3 border rounded">
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Portugal x RD Congo</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k1_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="k1_2" style="width:50px"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Uzbequistão x Colômbia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k2_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="k2_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Portugal x Uzbequistão</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k3_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="k3_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Colômbia x RD Congo</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k4_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="k4_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">RD Congo x Uzbequistão</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k5_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="k5_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Colômbia x Portugal</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k6_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="k6_2" style="width:50px" ></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Portugal x RD Congo</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="k1_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Uzbequistão x Colômbia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="k2_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Portugal x Uzbequistão</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="k3_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Colômbia x RD Congo</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="k4_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">RD Congo x Uzbequistão</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="k5_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Colômbia x Portugal</div><div class="col-7"><input type="number" min="0" class="input-placar" name="k6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="k6_2" style="width:50px" required></div></div>
     </div>
 </div>
 <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#palpitesGrupoL">⬇️ Palpites: Grupo L</button>
 <div class="collapse" id="palpitesGrupoL">
     <div class="grupo-container bg-light p-3 mb-3 border rounded">
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Inglaterra x Croácia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l1_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="l1_2" style="width:50px"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Gana x Panamá</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l2_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="l2_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Inglaterra x Gana</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l3_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="l3_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Panamá x Croácia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l4_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="l4_2" style="width:50px"></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Croácia x Gana</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l5_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="l5_2" style="width:50px" ></div></div>
-        <div class="row align-items-center mb-2 text-center"><div class="col-5">Panamá x Inglaterra</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l6_1" style="width:50px"> x <input type="number" min="0" class="input-placar" name="l6_2" style="width:50px" ></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Inglaterra x Croácia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l1_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="l1_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Gana x Panamá</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l2_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="l2_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Inglaterra x Gana</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l3_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="l3_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Panamá x Croácia</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l4_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="l4_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Croácia x Gana</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l5_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="l5_2" style="width:50px" required></div></div>
+        <div class="row align-items-center mb-2 text-center"><div class="col-5">Panamá x Inglaterra</div><div class="col-7"><input type="number" min="0" class="input-placar" name="l6_1" style="width:50px" required> x <input type="number" min="0" class="input-placar" name="l6_2" style="width:50px" required></div></div>
     </div>
 </div>
 
@@ -419,7 +431,7 @@
             // Se já tem palpite, você tem duas opções:
             
             // OPÇÃO A: Redirecionar para uma página de aviso (RECOMENDADO)
-            window.location.href = "aviso_ja_preenchido.html"; 
+            window.location.replace("aviso_ja_preenchido.html");
             
             /* // OPÇÃO B: Se quiser manter na mesma página, use isto:
             divForm.style.display = "none";
@@ -447,7 +459,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function popularAutorGol() {
         const todosJogadores = [
             "Alisson", "Ederson", "Weverton", // Goleiros
-            "Alex Sandro", "Bremer", "Danilo", "Douglas Santos", "Gabriel Magalhães", "Ibañez", "Léo Pereira", "Marquinhos", "Wesley", // Defensores
+            "Alex Sandro", "Bremer", "Danilo Silva", "Douglas Santos", "Gabriel Magalhães", "Ibañez", "Léo Pereira", "Marquinhos", "Wesley", // Defensores
             "Bruno Guimarães", "Casemiro", "Danilo Santos", "Fabinho", "Lucas Paquetá", // Meio-campistas
             "Endrick", "Gabriel Martinelli", "Igor Thiago", "Luiz Henrique", "Matheus Cunha", "Neymar", "Raphinha", "Rayan", "Vini Jr." // Atacantes
         ].sort(); // O .sort() coloca em ordem alfabética automaticamente
@@ -465,18 +477,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // 4. FUNÇÃO PARA PREENCHER GRUPOS
     function carregarGrupos() {
         const grupos = {
-            "A": ["México", "Rep. Tcheca", "Coreia do Sul", "África do Sul"],
-            "B": ["Canadá", "Catar", "Bósnia Herzegovina", "Suíça"],
-            "C": ["Brasil", "Marrocos", "Haiti", "Escócia"],
-            "D": ["Estados Unidos", "Paraguai", "Austrália", "Turquia"],
-            "E": ["Alemanha", "Curaçao", "Costa do Marfim", "Equador"],
+            "A": ["África do Sul", "Coreia do Sul", "México", "Rep. Tcheca"],
+            "B": ["Bósnia Herzegovina", "Canadá", "Catar", "Suíça"],
+            "C": ["Brasil", "Escócia", "Haiti", "Marrocos"],
+            "D": ["Austrália", "Estados Unidos", "Paraguai", "Turquia"],
+            "E": ["Alemanha", "Costa do Marfim", "Curaçao", "Equador"],
             "F": ["Holanda", "Japão", "Suécia", "Tunísia"],
             "G": ["Bélgica", "Egito", "Irã", "Nova Zelândia"],
-            "H": ["Espanha", "Cabo Verde", "Arábia Saudita", "Uruguai"],
-            "I": ["França", "Senegal", "Iraque", "Noruega"],
+            "H": ["Arábia Saudita", "Cabo Verde", "Espanha", "Uruguai"],
+            "I": ["França", "Iraque", "Noruega", "Senegal"],
             "J": ["Argentina", "Argélia", "Áustria", "Jordânia"],
-            "K": ["Portugal", "RD Congo", "Uzbequistão", "Colômbia"],
-            "L": ["Inglaterra", "Croácia", "Gana", "Panamá"]
+            "K": ["Colômbia", "Portugal", "RD Congo", "Uzbequistão"],
+            "L": ["Croácia", "Gana", "Inglaterra", "Panamá"]
         };
 
         const container = document.getElementById('container-grupos');
@@ -650,7 +662,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Recarrega a verificação para bloquear o formulário após o sucesso
             verificarPalpiteExistente(usuarioLogado);
         }
-        window.location.href = "meus_palpites.html"; // Redireciona logo após enviar
+        window.location.replace("meus_palpites.html"); // Redireciona logo após enviar
     });
 </script>
 </body>
