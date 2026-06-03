@@ -42,12 +42,16 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+    // Ao abrir o login, limpa qualquer sessão antiga
+    window.addEventListener("pageshow", () => {
+        localStorage.removeItem("bolao_user");
+    });
+
     const SUPABASE_URL = "https://phirqisfutnwqhhswjxh.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY";
     
     let supabaseClient;
 
-    // Garante a inicialização correta independente do tipo de carregamento do navegador
     try {
         if (typeof supabase !== 'undefined') {
             supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -60,7 +64,6 @@
         alert("❌ Erro ao iniciar o Banco no Login:\n" + e.message);
     }
 
-    // Evento de Login
     document.getElementById("loginForm").addEventListener("submit", async function(e) {
         e.preventDefault();
         
@@ -72,7 +75,6 @@
         btn.innerText = "Verificando credenciais...";
 
         try {
-            // Consulta no Supabase procurando pelo usuário e senha exatos
             const { data, error } = await supabaseClient
                 .from('palpiteiro')
                 .select('usuario, nome_completo')
@@ -84,15 +86,15 @@
                 return;
             }
 
-            // Se retornar dados (data.length > 0), o login é válido
             if (data && data.length > 0) {
-                // Armazena o usuário atual no localStorage para uso nas próximas telas (ex: palpites.html)
+                // Salva o usuário logado
                 localStorage.setItem("bolao_user", username);
                 
                 alert(`👋 Bem-vindo de volta, ${data[0].nome_completo}!`);
-                window.location.href = "./menu.html"; 
+                
+                // Substitui a página no histórico para impedir avançar sem login
+                window.location.replace("./menu.html"); 
             } else {
-                // Se o retorno vier vazio, as credenciais estão erradas
                 alert("❌ Usuário ou senha incorretos! Verifique os dados ou crie uma nova conta.");
             }
 
