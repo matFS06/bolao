@@ -5,10 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Classificação Geral - Bolão da Copa</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        .group-header { background-color: #198754; color: white; padding: 5px; border-radius: 5px; font-weight: bold; font-size: 0.9em; }
+    </style>
 </head>
 <body class="p-4 bg-light">
 
-<div class="container" style="max-width: 600px;">
+<div class="container" style="max-width: 900px;">
     <h2 class="text-success fw-bold text-center mb-4">🏆 Classificação Geral</h2>
     
     <div id="loading" class="text-center text-muted">Carregando ranking...</div>
@@ -19,7 +23,8 @@
                 <th>Pos</th>
                 <th>Nome Completo</th>
                 <th>Usuário</th>
-                <th class="text-center">Pontos</th>
+                <th>Pontos</th>
+                <th>Auditoria</th>
             </tr>
         </thead>
         <tbody id="tabelaRanking"></tbody>
@@ -28,53 +33,135 @@
     <a href="menu.html" class="btn btn-secondary w-100 mt-3">Voltar ao Menu</a>
 </div>
 
+<div class="modal fade" id="modalAuditoria" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-success text-white">
+                <h5 class="modal-title">Palpites de: <span id="spanUser"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="corpoModal">Carregando...</div>
+        </div>
+    </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
     const db = supabase.createClient("https://phirqisfutnwqhhswjxh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY");
+    
+    const jogosConfig = { 
+        'a': ["México x África do Sul", "Coreia do Sul x Rep. Tcheca", "Rep. Tcheca x África do Sul", "México x Coreia do Sul", "África do Sul x Coreia do Sul", "Rep. Tcheca x México"], 
+        'b': ["Canadá x Bósnia", "Catar x Suíça", "Suíça x Bósnia", "Canadá x Catar", "Suíça x Canadá", "Bósnia x Catar"], 
+        'c': ["Brasil x Marrocos", "Haiti x Escócia", "Escócia x Marrocos", "Brasil x Haiti", "Marrocos x Haiti", "Escócia x Brasil"], 
+        'd': ["EUA x Paraguai", "Austrália x Turquia", "EUA x Austrália", "Turquia x Paraguai", "Turquia x EUA", "Paraguai x Austrália"], 
+        'e': ["Alemanha x Curaçau", "Costa do Marfim x Equador", "Alemanha x Costa do Marfim", "Equador x Curaçau", "Equador x Alemanha", "Curaçau x Costa do Marfim"], 
+        'f': ["Holanda x Japão", "Suécia x Tunísia", "Holanda x Suécia", "Tunísia x Japão", "Tunísia x Holanda", "Japão x Suécia"], 
+        'g': ["Bélgica x Egito", "Irã x N. Zelândia", "Bélgica x Irã", "N. Zelândia x Egito", "Egito x Irã", "N. Zelândia x Bélgica"], 
+        'h': ["Espanha x Cabo Verde", "Arábia Saudita x Uruguai", "Espanha x Arábia Saudita", "Uruguai x Cabo Verde", "Cabo Verde x Arábia Saudita", "Uruguai x Espanha"], 
+        'i': ["França x Senegal", "Iraque x Noruega", "França x Iraque", "Noruega x Senegal", "Senegal x Iraque", "Noruega x França"], 
+        'j': ["Argentina x Argélia", "Áustria x Jordânia", "Argentina x Áustria", "Jordânia x Argélia", "Jordânia x Argentina", "Argélia x Áustria"], 
+        'k': ["Portugal x RD Congo", "Uzbequistão x Colômbia", "Portugal x Uzbequistão", "Colômbia x RD Congo", "RD Congo x Uzbequistão", "Colômbia x Portugal"], 
+        'l': ["Inglaterra x Croácia", "Gana x Panamá", "Inglaterra x Gana", "Panamá x Croácia", "Croácia x Gana", "Panamá x Inglaterra"] 
+    };
+
+    async function verPalpites(usuario) {
+        document.getElementById('spanUser').innerText = usuario;
+        const modalBody = document.getElementById('corpoModal');
+        modalBody.innerHTML = "Carregando...";
+        new bootstrap.Modal(document.getElementById('modalAuditoria')).show();
+
+        const { data, error } = await db.from('palpitescopa').select('*').eq('nome_usuario', usuario);
+        if (error || !data || data.length === 0) { 
+            modalBody.innerHTML = "Erro ao carregar ou palpites não encontrados."; 
+            return; 
+        }
+        
+        const p = data[0];
+        
+        let html = `<div class="row">`;
+        ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'].forEach(letra => {
+            html += `
+            <div class="col-6 mb-2">
+                <div class="border rounded p-1 text-center">
+                    <div class="group-header">Grupo ${letra.toUpperCase()}</div>
+                    <small>1º: <b>${p[`grupo_${letra}_1`]}</b><br>2º: <b>${p[`grupo_${letra}_2`]}</b></small>
+                </div>
+            </div>`;
+        });
+        html += `</div>`;
+
+        html += `<h6 class="mt-3">Placares dos Jogos:</h6>`;
+        for (let letra in jogosConfig) {
+            let offset = (letra.charCodeAt(0) - 97) * 6;
+            html += `
+            <div class="accordion mb-2" id="acc${letra}">
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed py-2" type="button" data-bs-toggle="collapse" data-bs-target="#c${letra}">
+                            Grupo ${letra.toUpperCase()}
+                        </button>
+                    </h2>
+                    <div id="c${letra}" class="accordion-collapse collapse" data-bs-parent="#acc${letra}">
+                        <div class="accordion-body p-2">
+                            ${jogosConfig[letra].map((jogo, i) => {
+                                let idx = offset + i + 1;
+                                return `<div class="d-flex justify-content-between border-bottom py-1"><span>${jogo}</span> <b>${p['j'+idx+'m']} x ${p['j'+idx+'v']}</b></div>`;
+                            }).join('')}
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        html += `
+        <div class="card mt-3 border-success">
+            <div class="card-body p-2">
+                <h6 class="text-success">🏆 Top 4 Final:</h6>
+                <p class="mb-1">🥇 ${p.campeao} | 🥈 ${p.vice}</p>
+                <p class="mb-1">🥉 ${p.terceiro} | 🏅 ${p.quarto}</p>
+                <hr class="my-1">
+                <p class="mb-0">⚽ 1º Gol do Brasil: <b>${p.autor_gol}</b></p>
+            </div>
+        </div>`;
+        
+        modalBody.innerHTML = html;
+    }
 
     document.addEventListener("DOMContentLoaded", async () => {
         const tabela = document.getElementById('tabelaRanking');
         const loading = document.getElementById('loading');
 
         try {
-            // 1. Busca os palpites ordenados pela pontuação
-            const { data: palpites, error: errPalpites } = await db
-                .from('palpitescopa')
-                .select('nome_usuario, pontuacao')
-                .order('pontuacao', { ascending: false });
-
-            // 2. Busca todos os usuários para cruzar os dados
-            const { data: usuarios, error: errUsuarios } = await db
-                .from('palpiteiro')
-                .select('usuario, nome_completo');
-
-            if (errPalpites || errUsuarios) throw new Error("Erro ao buscar dados do banco.");
+            const [ { data: palpites }, { data: usuarios } ] = await Promise.all([
+                db.from('palpitescopa').select('nome_usuario, pontuacao').order('pontuacao', { ascending: false }),
+                db.from('palpiteiro').select('usuario, nome_completo')
+            ]);
 
             loading.style.display = 'none';
 
-            if (palpites.length === 0) {
-                tabela.innerHTML = `<tr><td colspan="4" class="text-center">Nenhum palpite registrado ainda.</td></tr>`;
+            if (!palpites || palpites.length === 0) {
+                tabela.innerHTML = `<tr><td colspan="5" class="text-center">Nenhum palpite registrado.</td></tr>`;
                 return;
             }
 
-            // 3. Monta a tabela
             palpites.forEach((p, index) => {
                 const userObj = usuarios.find(u => u.usuario === p.nome_usuario);
-                const nomeCompleto = userObj ? userObj.nome_completo : "Desconhecido";
+                const nomeCompleto = userObj ? userObj.nome_completo : '---';
 
-                tabela.innerHTML += `
-                    <tr>
-                        <td>${index + 1}º</td>
-                        <td>${nomeCompleto}</td>
-                        <td>${p.nome_usuario}</td>
-                        <td class="text-center fw-bold text-success">${p.pontuacao}</td>
-                    </tr>
-                `;
+                tabela.innerHTML += `<tr>
+                    <td>${index + 1}º</td>
+                    <td>${nomeCompleto}</td>
+                    <td>${p.nome_usuario}</td>
+                    <td class="fw-bold text-success">${p.pontuacao}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-success" onclick="verPalpites('${p.nome_usuario}')">
+                            👁️ Ver
+                        </button>
+                    </td>
+                </tr>`;
             });
-
         } catch (err) {
-            loading.style.display = 'none';
-            tabela.innerHTML = `<tr><td colspan="4" class="text-danger text-center">${err.message}</td></tr>`;
+            loading.innerText = "Erro ao carregar: " + err.message;
         }
     });
 </script>
