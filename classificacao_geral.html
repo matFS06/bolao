@@ -23,7 +23,7 @@
                 <th>Pos</th>
                 <th>Nome Completo</th>
                 <th>Usuário</th>
-                <th>Pontos</th>
+                <th>Pontos (Exatos)</th>
                 <th>Auditoria</th>
             </tr>
         </thead>
@@ -132,27 +132,51 @@
         const loading = document.getElementById('loading');
 
         try {
+            // Traz os dados ordenados por pontos (Maior pro menor) e depois por placares exatos (Maior pro menor)
             const [ { data: palpites }, { data: usuarios } ] = await Promise.all([
-                db.from('palpitescopa').select('nome_usuario, pontuacao').order('pontuacao', { ascending: false }),
+                db.from('palpitescopa')
+                  .select('nome_usuario, pontuacao, placares_exatos')
+                  .order('pontuacao', { ascending: false })
+                  .order('placares_exatos', { ascending: false }),
                 db.from('palpiteiro').select('usuario, nome_completo')
             ]);
 
             loading.style.display = 'none';
 
-            if (!palpites || palpites.length === 0) {
+            if (!palpites || empty(palpites) || palpites.length === 0) {
                 tabela.innerHTML = `<tr><td colspan="5" class="text-center">Nenhum palpite registrado.</td></tr>`;
                 return;
             }
 
+            // Variáveis de controle para a lógica de empate clássico
+            let posicaoAtual = 1;
+            let ultimaPontuacao = -1;
+            let ultimosPlacaresExatos = -1;
+
             palpites.forEach((p, index) => {
-                const userObj = usuarios.find(u => u.usuario === p.nome_usuario);
+                const userObj = usuarios ? usuarios.find(u => u.usuario === p.nome_usuario) : null;
                 const nomeCompleto = userObj ? userObj.nome_completo : '---';
 
+                // Lógica de empate olímpica: se tiver os mesmos pontos E mesmos placares exatos do anterior, divide a posição.
+                // Caso contrário, assume a posição correspondente ao índice real da lista + 1 (ex: pula do 1º para o 4º).
+                if (index > 0 && p.pontuacao === ultimaPontuacao && p.placares_exatos === ultimosPlacaresExatos) {
+                    // Mantém a mesma posicaoAtual anterior
+                } else {
+                    posicaoAtual = index + 1;
+                }
+
+                // Atualiza o histórico para comparar com o próximo jogador da iteração
+                ultimaPontuacao = p.pontuacao;
+                ultimosPlacaresExatos = p.placares_exatos;
+
+                // Garante que se a coluna estiver vazia ou nula no banco, exiba 0
+                const exatosExibicao = p.placares_exatos || 0;
+
                 tabela.innerHTML += `<tr>
-                    <td>${index + 1}º</td>
+                    <td><b>${posicaoAtual}º</b></td>
                     <td>${nomeCompleto}</td>
                     <td>${p.nome_usuario}</td>
-                    <td class="fw-bold text-success">${p.pontuacao}</td>
+                    <td class="fw-bold text-success">${p.pontuacao} <small class="text-muted fw-normal">(${exatosExibicao} crav.)</small></td>
                     <td>
                         <button class="btn btn-sm btn-outline-success" onclick="verPalpites('${p.nome_usuario}')">
                             👁️ Ver
@@ -164,6 +188,9 @@
             loading.innerText = "Erro ao carregar: " + err.message;
         }
     });
+
+    // Função auxiliar caso o retorno venha vazio por algum motivo
+    function empty(obj) { return !obj || Object.keys(obj).length === 0; }
 </script>
 </body>
 </html>
