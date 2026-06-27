@@ -8,37 +8,31 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
         body {
-            /* A imagem acompanha o redimensionamento da janela */
             background-image: url('bg_bolao.png');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            /* Remover o 'fixed' faz com que a imagem role com a página, 
-            o que ajuda a dar a sensação de que ela está "presa" ao conteúdo */
-            background-attachment: scroll; 
-            
+            background-attachment: scroll;
             min-height: 100vh;
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-
         .container {
-            /* O container vai encolher naturalmente com o zoom 
-            por causa do max-width e da largura relativa */
             width: 90%;
-            max-width: 500px; 
+            max-width: 800px;
             background-color: rgba(255, 255, 255, 0.9);
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
         }
+        .group-header { background: #28a745; color: white; padding: 5px; font-weight: bold; }
     </style>
 </head>
 <body class="p-4">
 
-<div class="container" style="max-width: 800px;">
+<div class="container">
     <h2 class="text-success fw-bold mb-4">🏆 Meus Palpites</h2>
 
     <div id="divPontuacao" class="alert alert-success shadow-sm text-center fw-bold fs-4 mb-4" style="display: none;">
@@ -63,6 +57,7 @@
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY";
     const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+    // Configuração dos jogos da primeira fase para mapear os nomes
     const jogosConfig = {
         'a': ["México x África do Sul", "Coreia do Sul x Rep. Tcheca", "Rep. Tcheca x África do Sul", "México x Coreia do Sul", "África do Sul x Coreia do Sul", "Rep. Tcheca x México"],
         'b': ["Canadá x Bósnia", "Catar x Suíça", "Suíça x Bósnia", "Canadá x Catar", "Suíça x Canadá", "Bósnia x Catar"],
@@ -78,10 +73,19 @@
         'l': ["Inglaterra x Croácia", "Gana x Panamá", "Inglaterra x Gana", "Panamá x Croácia", "Croácia x Gana", "Panamá x Inglaterra"]
     };
 
+    // Configuração dos nomes dos jogos das 16 Avos de Final
+    const jogos16avos = [
+        "Alemanha x Paraguai", "França x Suécia", "África do Sul x Canadá", "Holanda x Marrocos",
+        "2K x 2L", "Espanha x 2J", "EUA x Bósnia", "Bélgica x 3 AEHIJ",
+        "Brasil x Japão", "Costa do Marfim x Noruega", "México x 3 CEFHI", "1L x 3EHIJK",
+        "Argentina x Cabo Verde", "Austrália x Egito", "Suíça x 3 EFGIJ", "1K x 3 DEIJL"
+    ];
+
     document.addEventListener("DOMContentLoaded", async () => {
         const usuarioLogado = localStorage.getItem("bolao_user");
         if (!usuarioLogado) { window.location.href = "./index.html"; return; }
 
+        // Busca os dados do usuário no Supabase
         const { data, error } = await db
             .from('palpitescopa')
             .select('*')
@@ -96,15 +100,15 @@
         } else if (!data || data.length === 0) {
             container.innerHTML = `<div class="alert alert-info">Você ainda não enviou nenhum palpite.</div>`;
         } else {
-            const p = data[data.length - 1];
+            const p = data[data.length - 1]; // Pega o último registro enviado
             
-            // Exibir pontuação
+            // Exibir pontuação atual
             divPontos.style.display = 'block';
             divPontos.innerText = `📊 Sua pontuação atual: ${p.pontuacao || 0} pontos`;
 
             let html = `<h4>Olá, <strong>${usuarioLogado}</strong>!</h4><hr>`;
             
-            // 1. Grupos
+            // 1. Exibição dos Grupos
             html += `<div class="row">`;
             const letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'];
             letras.forEach(letra => {
@@ -118,8 +122,8 @@
             });
             html += `</div>`;
 
-            // 2. Placares
-            html += `<h5 class="mt-4">Placares dos Jogos:</h5>`;
+            // 2. Exibição dos Placares da fase de grupos
+            html += `<h5 class="mt-4">Placares dos Jogos (Fase de Grupos):</h5>`;
             for (let letra in jogosConfig) {
                 let offset = (letra.charCodeAt(0) - 97) * 6;
                 html += `
@@ -130,17 +134,30 @@
                     <div class="bg-light p-3 border rounded">
                         ${jogosConfig[letra].map((jogo, i) => {
                             let idx = offset + i + 1;
-                            return `<div class="row text-center mb-1"><div class="col-6">${jogo}</div><div class="col-6"><b>${p['j'+idx+'m']} x ${p['j'+idx+'v']}</b></div></div>`;
+                            return `<div class="row text-center mb-1"><div class="col-6">${jogo}</div><div class="col-6"><b>${p['j'+idx+'m'] ?? 0} x ${p['j'+idx+'v'] ?? 0}</b></div></div>`;
                         }).join('')}
                     </div>
                 </div>`;
             }
 
-            // 3. Finais
+            // 3. Exibição dos 16 Avos de Final
+            html += `<h5 class="mt-4 text-primary">⚽ Palpites: 16 Avos de Final</h5>
+                     <div class="bg-white p-3 border rounded mb-4">`;
+            for (let i = 1; i <= 16; i++) {
+                // Busca os valores salvos no banco (ex: a1m, a1v, a2m, a2v...)
+                html += `
+                <div class="row text-center border-bottom py-1">
+                    <div class="col-8 text-start small">${jogos16avos[i-1]}</div>
+                    <div class="col-4"><b>${p[`a${i}m`] ?? 0} x ${p[`a${i}v`] ?? 0}</b></div>
+                </div>`;
+            }
+            html += `</div>`;
+
+            // 4. Exibição das colocações finais
             html += `
             <div class="card mt-4 border-success shadow-sm">
                 <div class="card-body">
-                    <h5 class="text-success fw-bold">🏆 Colocações Finais e 1º Gol do Brasil</h5>
+                    <h5 class="text-success fw-bold">🏆 Colocações Finais</h5>
                     <p>🥇 Campeão: <b>${p.campeao}</b> | 🥈 Vice: <b>${p.vice}</b></p>
                     <p>🥉 3º Lugar: <b>${p.terceiro}</b> | 🏅 4º Lugar: <b>${p.quarto}</b></p>
                     <p>⚽ Autor do 1º Gol do Brasil: <b>${p.autor_gol}</b></p>
