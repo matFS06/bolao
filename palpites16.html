@@ -47,12 +47,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+    // Usamos um nome de variável diferente (sbClient) para evitar conflitos com a biblioteca
     const SUPABASE_URL = "https://phirqisfutnwqhhswjxh.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY";
     
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // Criamos a instância do cliente com um nome único
+    const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // Validação inicial de login
     document.addEventListener('DOMContentLoaded', () => {
         if (!localStorage.getItem('bolao_user')) {
             window.location.href = 'index.html';
@@ -73,7 +74,8 @@
             payload[`a${i}v`] = parseInt(document.querySelector(`input[name="a${i}_2"]`).value) || 0;
         }
 
-        const { data, error } = await supabase
+        // Usamos a variável sbClient aqui
+        const { data, error } = await sbClient
             .from('ppalpitescopa')
             .insert([payload]);
 
