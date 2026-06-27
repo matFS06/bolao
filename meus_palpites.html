@@ -140,18 +140,22 @@
                 </div>`;
             }
 
-            // 3. Exibição dos 16 Avos de Final
-            html += `<h5 class="mt-4 text-primary">⚽ Palpites: 16 Avos de Final</h5>
-                     <div class="bg-white p-3 border rounded mb-4">`;
+            // 3. Exibição dos 16 Avos de Final (Expansível)
+            html += `
+            <button class="btn btn-outline-primary w-100 mb-2 mt-2" data-bs-toggle="collapse" data-bs-target="#palpites16Avos">
+                ⬇️ Palpites: 16 Avos de Final
+            </button>
+            <div class="collapse mb-3" id="palpites16Avos">
+                <div class="bg-white p-3 border rounded shadow-sm">`;
             for (let i = 1; i <= 16; i++) {
-                // Busca os valores salvos no banco (ex: a1m, a1v, a2m, a2v...)
                 html += `
                 <div class="row text-center border-bottom py-1">
                     <div class="col-8 text-start small">${jogos16avos[i-1]}</div>
                     <div class="col-4"><b>${p[`a${i}m`] ?? 0} x ${p[`a${i}v`] ?? 0}</b></div>
                 </div>`;
             }
-            html += `</div>`;
+            html += `   </div>
+            </div>`;
 
             // 4. Exibição das colocações finais
             html += `
