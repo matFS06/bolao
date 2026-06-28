@@ -7,34 +7,25 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <style>
-        /* Configuração do Fundo */
         body {
             background-image: url('bg_bolao.png');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            background-attachment: scroll; /* Scroll permite que o fundo se ajuste ao conteúdo */
+            background-attachment: scroll;
             min-height: 100vh;
             margin: 0;
             padding: 20px 0;
         }
-
-        /* Container com fundo translúcido para leitura */
         .container {
             background-color: rgba(255, 255, 255, 0.9);
             padding: 2rem;
             border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            /* Permite que o container encolha proporcionalmente ao zoom */
             width: 95%; 
             max-width: 900px;
         }
-
-        /* Estilos dos elementos da tabela */
-        .table {
-            background-color: transparent !important;
-        }
-
+        .table { background-color: transparent !important; }
         .group-header { 
             background-color: #198754; 
             color: white; 
@@ -99,6 +90,13 @@
         'l': ["Inglaterra x Croácia", "Gana x Panamá", "Inglaterra x Gana", "Panamá x Croácia", "Croácia x Gana", "Panamá x Inglaterra"] 
     };
 
+    function formatarExibicao(m, v) {
+        if (m === null || v === null) {
+            return `<span class="text-muted fst-italic" style="font-size: 0.8em;">Não palpitou</span>`;
+        }
+        return `<b>${m} x ${v}</b>`;
+    }
+
     async function verPalpites(usuario) {
         document.getElementById('spanUser').innerText = usuario;
         const modalBody = document.getElementById('corpoModal');
@@ -140,7 +138,10 @@
                         <div class="accordion-body p-2">
                             ${jogosConfig[letra].map((jogo, i) => {
                                 let idx = offset + i + 1;
-                                return `<div class="d-flex justify-content-between border-bottom py-1"><span>${jogo}</span> <b>${p['j'+idx+'m']} x ${p['j'+idx+'v']}</b></div>`;
+                                return `<div class="d-flex justify-content-between border-bottom py-1">
+                                            <span class="small">${jogo}</span> 
+                                            <span>${formatarExibicao(p['j'+idx+'m'], p['j'+idx+'v'])}</span>
+                                        </div>`;
                             }).join('')}
                         </div>
                     </div>
@@ -167,7 +168,6 @@
         const loading = document.getElementById('loading');
 
         try {
-            // Traz os dados ordenados por pontos (Maior pro menor) e depois por placares exatos (Maior pro menor)
             const [ { data: palpites }, { data: usuarios } ] = await Promise.all([
                 db.from('palpitescopa')
                   .select('nome_usuario, pontuacao, placares_exatos')
@@ -183,7 +183,6 @@
                 return;
             }
 
-            // Variáveis de controle para a lógica de empate clássico
             let posicaoAtual = 1;
             let ultimaPontuacao = -1;
             let ultimosPlacaresExatos = -1;
@@ -192,19 +191,14 @@
                 const userObj = usuarios ? usuarios.find(u => u.usuario === p.nome_usuario) : null;
                 const nomeCompleto = userObj ? userObj.nome_completo : '---';
 
-                // Lógica de empate olímpica: se tiver os mesmos pontos E mesmos placares exatos do anterior, divide a posição.
-                // Caso contrário, assume a posição correspondente ao índice real da lista + 1 (ex: pula do 1º para o 4º).
                 if (index > 0 && p.pontuacao === ultimaPontuacao && p.placares_exatos === ultimosPlacaresExatos) {
-                    // Mantém a mesma posicaoAtual anterior
+                    // Mantém a mesma posicaoAtual
                 } else {
                     posicaoAtual = index + 1;
                 }
 
-                // Atualiza o histórico para comparar com o próximo jogador da iteração
                 ultimaPontuacao = p.pontuacao;
                 ultimosPlacaresExatos = p.placares_exatos;
-
-                // Garante que se a coluna estiver vazia ou nula no banco, exiba 0
                 const exatosExibicao = p.placares_exatos || 0;
 
                 tabela.innerHTML += `<tr>
@@ -224,7 +218,6 @@
         }
     });
 
-    // Função auxiliar caso o retorno venha vazio por algum motivo
     function empty(obj) { return !obj || Object.keys(obj).length === 0; }
 </script>
 </body>
