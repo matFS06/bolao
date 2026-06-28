@@ -10,7 +10,6 @@
         .input-placar { width: 50px; height: 50px; text-align: center; border: 2px solid #ddd; border-radius: 8px; font-weight: bold; font-size: 1.2rem; }
         .team-name { font-weight: 600; font-size: 0.95rem; }
         .flag-img { width: 28px; height: 20px; border-radius: 2px; }
-        /* Estilo para campos desabilitados */
         input:disabled { background-color: #e9ecef; cursor: not-allowed; }
     </style>
 </head>
@@ -61,9 +60,38 @@
         e.preventDefault();
         const usuarioLogado = localStorage.getItem('bolao_user');
         
+        // 1. Busca os dados atuais no banco para verificar se já existe algum palpite
+        const { data: usuarioData, error: erroFetch } = await sbClient
+            .from('palpitescopa')
+            .select('*')
+            .eq('nome_usuario', usuarioLogado)
+            .single();
+
+        if (erroFetch) {
+            alert('Erro ao verificar status: ' + erroFetch.message);
+            return;
+        }
+
+        // 2. Verifica se algum dos campos (de a1m a a16v) já foi preenchido
+        let jaPalpitou = false;
+        for (let i = 1; i <= 16; i++) {
+            if (i === 3) continue; 
+
+            // Se qualquer um dos campos já tiver valor (não for null), bloqueia
+            if (usuarioData[`a${i}m`] !== null || usuarioData[`a${i}v`] !== null) {
+                jaPalpitou = true;
+                break;
+            }
+        }
+
+        if (jaPalpitou) {
+            alert('Você já submeteu seus palpites e não pode alterá-los!');
+            return; 
+        }
+
+        // 3. Se passou pela verificação, prossegue com o envio
         const payload = {};
         for (let i = 1; i <= 16; i++) {
-            // PULA O JOGO 3 (Africa x Canada)
             if (i === 3) continue; 
 
             payload[`a${i}m`] = parseInt(document.querySelector(`input[name="a${i}_1"]`).value) || 0;
