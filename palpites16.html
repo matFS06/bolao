@@ -7,10 +7,11 @@
     <style>
         body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
         .match-card { background: white; border-radius: 12px; padding: 12px 20px; margin-bottom: 10px; transition: all 0.3s; border-left: 5px solid #2c3e50; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .match-card:hover { transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-left-color: #27ae60; }
         .input-placar { width: 50px; height: 50px; text-align: center; border: 2px solid #ddd; border-radius: 8px; font-weight: bold; font-size: 1.2rem; }
         .team-name { font-weight: 600; font-size: 0.95rem; }
         .flag-img { width: 28px; height: 20px; border-radius: 2px; }
+        /* Estilo para campos desabilitados */
+        input:disabled { background-color: #e9ecef; cursor: not-allowed; }
     </style>
 </head>
 <body class="py-5">
@@ -20,10 +21,18 @@
         <div class="col-md-9">
             <h3 class="text-center mb-4">🏆 16 Avos de Final</h3>
             <form id="formBolao">
-                <!-- Jogos 1 a 11 -->
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Alemanha</span> <img src="https://flagcdn.com/28x21/de.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a1_1" required> x <input type="number" class="input-placar mx-2" name="a1_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/py.png" class="flag-img"> <span class="team-name ms-2">Paraguai</span></div></div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">França</span> <img src="https://flagcdn.com/28x21/fr.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a2_1" required> x <input type="number" class="input-placar mx-2" name="a2_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/se.png" class="flag-img"> <span class="team-name ms-2">Suécia</span></div></div>
-                <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">África do Sul</span> <img src="https://flagcdn.com/28x21/za.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a3_1" required> x <input type="number" class="input-placar mx-2" name="a3_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/ca.png" class="flag-img"> <span class="team-name ms-2">Canadá</span></div></div>
+                
+                <div class="match-card row align-items-center text-center">
+                    <div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">África do Sul</span> <img src="https://flagcdn.com/28x21/za.png" class="flag-img"></div>
+                    <div class="col-4 d-flex justify-content-center align-items-center">
+                        <input type="number" class="input-placar mx-2" name="a3_1" disabled placeholder="-"> x 
+                        <input type="number" class="input-placar mx-2" name="a3_2" disabled placeholder="-">
+                    </div>
+                    <div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/ca.png" class="flag-img"> <span class="team-name ms-2">Canadá</span></div>
+                </div>
+
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Holanda</span> <img src="https://flagcdn.com/28x21/nl.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a4_1" required> x <input type="number" class="input-placar mx-2" name="a4_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/ma.png" class="flag-img"> <span class="team-name ms-2">Marrocos</span></div></div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Portugal</span> <img src="https://flagcdn.com/28x21/pt.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a5_1" required> x <input type="number" class="input-placar mx-2" name="a5_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/hr.png" class="flag-img"> <span class="team-name ms-2">Croácia</span></div></div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Espanha</span> <img src="https://flagcdn.com/28x21/es.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a6_1" required> x <input type="number" class="input-placar mx-2" name="a6_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/at.png" class="flag-img"> <span class="team-name ms-2">Áustria</span></div></div>
@@ -32,16 +41,10 @@
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Brasil</span> <img src="https://flagcdn.com/28x21/br.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a9_1" required> x <input type="number" class="input-placar mx-2" name="a9_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/jp.png" class="flag-img"> <span class="team-name ms-2">Japão</span></div></div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Costa do Marfim</span> <img src="https://flagcdn.com/28x21/ci.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a10_1" required> x <input type="number" class="input-placar mx-2" name="a10_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/no.png" class="flag-img"> <span class="team-name ms-2">Noruega</span></div></div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">México</span> <img src="https://flagcdn.com/28x21/mx.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a11_1" required> x <input type="number" class="input-placar mx-2" name="a11_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/ec.png" class="flag-img"> <span class="team-name ms-2">Equador</span></div></div>
-                
-                <!-- Jogo 12: Inglaterra x RD Congo -->
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Inglaterra</span> <img src="https://flagcdn.com/28x21/gb-eng.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a12_1" required> x <input type="number" class="input-placar mx-2" name="a12_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/cd.png" class="flag-img"> <span class="team-name ms-2">RD Congo</span></div></div>
-                
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Argentina</span> <img src="https://flagcdn.com/28x21/ar.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a13_1" required> x <input type="number" class="input-placar mx-2" name="a13_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/cv.png" class="flag-img"> <span class="team-name ms-2">Cabo Verde</span></div></div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Austrália</span> <img src="https://flagcdn.com/28x21/au.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a14_1" required> x <input type="number" class="input-placar mx-2" name="a14_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/eg.png" class="flag-img"> <span class="team-name ms-2">Egito</span></div></div>
-                
-                <!-- Jogo 15: Suíça x Argélia -->
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Suíça</span> <img src="https://flagcdn.com/28x21/ch.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a15_1" required> x <input type="number" class="input-placar mx-2" name="a15_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/dz.png" class="flag-img"> <span class="team-name ms-2">Argélia</span></div></div>
-                
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Colômbia</span> <img src="https://flagcdn.com/28x21/co.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a16_1" required> x <input type="number" class="input-placar mx-2" name="a16_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/gh.png" class="flag-img"> <span class="team-name ms-2">Gana</span></div></div>
             
                 <button type="submit" class="btn btn-success btn-lg w-100 mt-4">Confirmar Palpites</button>
@@ -52,35 +55,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    const SUPABASE_URL = "https://phirqisfutnwqhhswjxh.supabase.co";
-    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY";
-    
-    const sbClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    document.addEventListener('DOMContentLoaded', () => {
-        if (!localStorage.getItem('bolao_user')) {
-            window.location.href = 'index.html';
-        }
-    });
+    const sbClient = supabase.createClient("https://phirqisfutnwqhhswjxh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY");
 
     document.getElementById('formBolao').addEventListener('submit', async (e) => {
         e.preventDefault();
-        
         const usuarioLogado = localStorage.getItem('bolao_user');
         
-        const { data: usuario, error: erroConsulta } = await sbClient
-            .from('palpitescopa')
-            .select('a1m')
-            .eq('nome_usuario', usuarioLogado)
-            .single();
-
-        if (usuario && usuario.a1m !== null) {
-            alert('❌ Você já submeteu seus palpites para os 16 Avos. Não é permitido alterar.');
-            return;
-        }
-
         const payload = {};
         for (let i = 1; i <= 16; i++) {
+            // PULA O JOGO 3 (Africa x Canada)
+            if (i === 3) continue; 
+
             payload[`a${i}m`] = parseInt(document.querySelector(`input[name="a${i}_1"]`).value) || 0;
             payload[`a${i}v`] = parseInt(document.querySelector(`input[name="a${i}_2"]`).value) || 0;
         }
