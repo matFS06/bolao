@@ -20,7 +20,18 @@
         <div class="col-md-9">
             <h3 class="text-center mb-4">🏆 16 Avos de Final</h3>
             <form id="formBolao">
-                <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Alemanha</span> <img src="https://flagcdn.com/28x21/de.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a1_1" required> x <input type="number" class="input-placar mx-2" name="a1_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/py.png" class="flag-img"> <span class="team-name ms-2">Paraguai</span></div></div>
+                <div class="match-card row align-items-center text-center">
+                    <div class="col-4 d-flex justify-content-end align-items-center">
+                        <span class="team-name me-2">Alemanha</span> <img src="https://flagcdn.com/28x21/de.png" class="flag-img">
+                    </div>
+                    <div class="col-4 d-flex justify-content-center align-items-center">
+                        <input type="number" class="input-placar mx-2" name="a1_1" disabled placeholder="-"> x 
+                        <input type="number" class="input-placar mx-2" name="a1_2" disabled placeholder="-">
+                    </div>
+                    <div class="col-4 d-flex justify-content-start align-items-center">
+                        <img src="https://flagcdn.com/28x21/py.png" class="flag-img"> <span class="team-name ms-2">Paraguai</span>
+                    </div>
+                </div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">França</span> <img src="https://flagcdn.com/28x21/fr.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a2_1" required> x <input type="number" class="input-placar mx-2" name="a2_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/se.png" class="flag-img"> <span class="team-name ms-2">Suécia</span></div></div>
                 
                 <div class="match-card row align-items-center text-center">
@@ -82,7 +93,7 @@
         // 2. Verifica se algum dos campos (de a1m a a16v) já foi preenchido
         let jaPalpitou = false;
         for (let i = 1; i <= 16; i++) {
-            if (i === 3 || i === 9) continue; 
+            if (i === 1 || i === 3 || i === 9) continue; 
 
             // Se qualquer um dos campos já tiver valor (não for null), bloqueia
             if (usuarioData[`a${i}m`] !== null || usuarioData[`a${i}v`] !== null) {
@@ -99,7 +110,7 @@
         // 3. Se passou pela verificação, prossegue com o envio
         const payload = {};
         for (let i = 1; i <= 16; i++) {
-            if (i === 3 || i === 9) continue; 
+            if (i === 1 || i === 3 || i === 9) continue; 
 
             payload[`a${i}m`] = parseInt(document.querySelector(`input[name="a${i}_1"]`).value) || 0;
             payload[`a${i}v`] = parseInt(document.querySelector(`input[name="a${i}_2"]`).value) || 0;
