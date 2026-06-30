@@ -67,7 +67,15 @@
                     <div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/jp.png" class="flag-img"> <span class="team-name ms-2">Japão</span></div>
                 </div>
 
-                <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Costa do Marfim</span> <img src="https://flagcdn.com/28x21/ci.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a10_1" required> x <input type="number" class="input-placar mx-2" name="a10_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/no.png" class="flag-img"> <span class="team-name ms-2">Noruega</span></div></div>
+                <!-- Jogo 10: Costa do Marfim x Noruega (BLOQUEADO) -->
+                <div class="match-card row align-items-center text-center">
+                    <div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Costa do Marfim</span> <img src="https://flagcdn.com/28x21/ci.png" class="flag-img"></div>
+                    <div class="col-4 d-flex justify-content-center align-items-center">
+                        <input type="number" class="input-placar mx-2" name="a10_1" disabled placeholder="-"> x 
+                        <input type="number" class="input-placar mx-2" name="a10_2" disabled placeholder="-">
+                    </div>
+                    <div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/no.png" class="flag-img"> <span class="team-name ms-2">Noruega</span></div>
+                </div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">México</span> <img src="https://flagcdn.com/28x21/mx.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a11_1" required> x <input type="number" class="input-placar mx-2" name="a11_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/ec.png" class="flag-img"> <span class="team-name ms-2">Equador</span></div></div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Inglaterra</span> <img src="https://flagcdn.com/28x21/gb-eng.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a12_1" required> x <input type="number" class="input-placar mx-2" name="a12_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/cd.png" class="flag-img"> <span class="team-name ms-2">RD Congo</span></div></div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Argentina</span> <img src="https://flagcdn.com/28x21/ar.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="a13_1" required> x <input type="number" class="input-placar mx-2" name="a13_2" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/cv.png" class="flag-img"> <span class="team-name ms-2">Cabo Verde</span></div></div>
@@ -86,7 +94,7 @@
     const sbClient = supabase.createClient("https://phirqisfutnwqhhswjxh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY");
     
     // Lista de jogos bloqueados (basta adicionar o número aqui para bloquear futuros jogos)
-    const jogosBloqueados = [1, 3, 4, 9];
+    const jogosBloqueados = [1, 3, 4, 9, 10];
 
     document.getElementById('formBolao').addEventListener('submit', async (e) => {
         e.preventDefault();
