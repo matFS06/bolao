@@ -97,6 +97,13 @@
         "Argentina x Cabo Verde", "Austrália x Egito", "Suíça x Argélia", "Colômbia x Gana"
     ];
 
+    const oitavas = [
+        "Paraguai x França", "Canadá x Marrocos", 
+        "Portugal x Espanha", "EUA x Bélgica", 
+        "Brasil x Noruega", "México x Inglaterra", 
+        "Argentina x Egito", "Suíça x Colômbia"
+    ];
+
     async function verPalpites(usuario) {
         document.getElementById('spanUser').innerText = usuario;
         const modalBody = document.getElementById('corpoModal');
@@ -110,6 +117,23 @@
         }
         
         const p = data[0];
+
+        // --- Oitavas de Final ---
+        html += `<h6 class="text-warning mt-3 fw-bold">⚡ Oitavas de Final:</h6>
+                 <div class="list-group mb-3 shadow-sm">`;
+        
+        oitavas.forEach((jogo, i) => {
+            let n = i + 1;
+            let palpiteM = p['o'+n+'m'] !== null ? p['o'+n+'m'] : '-';
+            let palpiteV = p['o'+n+'v'] !== null ? p['o'+n+'v'] : '-';
+            
+            html += `
+            <div class="list-group-item d-flex justify-content-between align-items-center py-2">
+                <span class="small text-truncate" style="max-width: 70%;">${jogo}</span>
+                <span class="badge bg-warning text-dark rounded-pill">${palpiteM} x ${palpiteV}</span>
+            </div>`;
+        });
+        html += `</div><hr>`;
         
         // --- 16 Avos de Final ---
         let html = `<h6 class="text-primary mt-2 fw-bold">🏆 16 Avos de Final:</h6>
