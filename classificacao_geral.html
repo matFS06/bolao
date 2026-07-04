@@ -118,7 +118,10 @@
         
         const p = data[0];
 
-        // --- Oitavas de Final ---
+        // 1. INICIALIZE A VARIÁVEL AQUI
+        let html = ""; 
+
+        // 2. Oitavas de Final
         html += `<h6 class="text-warning mt-3 fw-bold">⚡ Oitavas de Final:</h6>
                  <div class="list-group mb-3 shadow-sm">`;
         
@@ -135,9 +138,9 @@
         });
         html += `</div><hr>`;
         
-        // --- 16 Avos de Final ---
-        let html = `<h6 class="text-primary mt-2 fw-bold">🏆 16 Avos de Final:</h6>
-                    <div class="list-group mb-3 shadow-sm">`;
+        // 3. 16 Avos de Final
+        html += `<h6 class="text-primary mt-2 fw-bold">🏆 16 Avos de Final:</h6>
+                 <div class="list-group mb-3 shadow-sm">`;
         
         jogos16avos.forEach((jogo, i) => {
             let n = i + 1;
@@ -152,8 +155,9 @@
         });
         html += `</div><hr>`;
 
-        // --- Grupos A-L ---
+        // O restante do código (Grupos, Top 4) permanece igual abaixo...
         html += `<div class="row">`;
+        // ... (o restante da sua função continua daqui para baixo)
         ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l'].forEach(letra => {
             html += `
             <div class="col-6 mb-2">
