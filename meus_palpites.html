@@ -80,6 +80,13 @@
         "Argentina x Cabo Verde", "Austrália x Egito", "Suíça x Argélia", "Colômbia x Gana"
     ];
 
+    const jogosOitavas = [
+        "Paraguai x França", "Canadá x Marrocos", 
+        "Portugal x Espanha", "EUA x Bélgica", 
+        "Brasil x Noruega", "México x Inglaterra", 
+        "Argentina x Egito", "Suíça x Colômbia"
+    ];
+
     document.addEventListener("DOMContentLoaded", async () => {
         const usuarioLogado = localStorage.getItem("bolao_user");
         if (!usuarioLogado) { window.location.href = "./index.html"; return; }
@@ -153,7 +160,27 @@
             }
             html += `</div></div>`;
 
-            // 4. Colocações
+            // 4. Oitavas de Final
+            html += `
+            <button class="btn btn-outline-warning w-100 mb-2 mt-2" data-bs-toggle="collapse" data-bs-target="#palpitesOitavas">
+                ⬇️ Palpites: Oitavas de Final
+            </button>
+            <div class="collapse mb-3" id="palpitesOitavas">
+                <div class="bg-white p-3 border rounded shadow-sm">`;
+                for (let i = 1; i <= 8; i++) {
+                    let m = p[`o${i}m`];
+                    let v = p[`o${i}v`];
+                    let displayPlacar = (m === null || v === null) ? '<span class="nao-palpitou">Não palpitou</span>' : `<b>${m} x ${v}</b>`;
+                    
+                    html += `
+                    <div class="row text-center border-bottom py-1">
+                        <div class="col-8 text-start small">${jogosOitavas[i-1]}</div>
+                        <div class="col-4">${displayPlacar}</div>
+                    </div>`;
+                }
+            html += `</div></div>`;
+
+            // 5. Colocações
             html += `
             <div class="card mt-4 border-success shadow-sm">
                 <div class="card-body">
