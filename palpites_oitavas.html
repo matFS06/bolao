@@ -19,7 +19,6 @@
         <div class="col-md-9">
             <h3 class="text-center mb-4">🏆 Oitavas de Final</h3>
             <form id="formOitavas">
-                <!-- Jogos com Bandeiras e min="0" -->
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Paraguai</span> <img src="https://flagcdn.com/28x21/py.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="o1_1" min="0" required> x <input type="number" class="input-placar mx-2" name="o1_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/fr.png" class="flag-img"> <span class="team-name ms-2">França</span></div></div>
                 
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Canadá</span> <img src="https://flagcdn.com/28x21/ca.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="o2_1" min="0" required> x <input type="number" class="input-placar mx-2" name="o2_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/ma.png" class="flag-img"> <span class="team-name ms-2">Marrocos</span></div></div>
@@ -32,9 +31,11 @@
                 
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">México</span> <img src="https://flagcdn.com/28x21/mx.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="o6_1" min="0" required> x <input type="number" class="input-placar mx-2" name="o6_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/gb-eng.png" class="flag-img"> <span class="team-name ms-2">Inglaterra</span></div></div>
                 
-                <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Venc. 13</span></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="o7_1" min="0" required> x <input type="number" class="input-placar mx-2" name="o7_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><span class="team-name ms-2">Venc. 14</span></div></div>
+                <!-- Jogo 7: Argentina x Egito -->
+                <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Argentina</span> <img src="https://flagcdn.com/28x21/ar.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="o7_1" min="0" required> x <input type="number" class="input-placar mx-2" name="o7_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/eg.png" class="flag-img"> <span class="team-name ms-2">Egito</span></div></div>
                 
-                <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Suíça</span> <img src="https://flagcdn.com/28x21/ch.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="o8_1" min="0" required> x <input type="number" class="input-placar mx-2" name="o8_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><span class="team-name ms-2">Venc. 16</span></div></div>
+                <!-- Jogo 8: Suíça x Colômbia -->
+                <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Suíça</span> <img src="https://flagcdn.com/28x21/ch.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="o8_1" min="0" required> x <input type="number" class="input-placar mx-2" name="o8_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/co.png" class="flag-img"> <span class="team-name ms-2">Colômbia</span></div></div>
             
                 <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Confirmar Palpites Oitavas</button>
             </form>
@@ -44,7 +45,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-    // Substitua pelo seu Client real
     const sbClient = supabase.createClient("https://phirqisfutnwqhhswjxh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY");
     
     document.getElementById('formOitavas').addEventListener('submit', async (e) => {
