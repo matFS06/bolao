@@ -104,6 +104,13 @@
         "Argentina x Egito", "Suíça x Colômbia"
     ];
 
+    const quartas = [
+        "França x Marrocos", 
+        "Espanha x Bélgica", 
+        "Noruega x Inglaterra", 
+        "Argentina x Suíça"
+    ];
+
     async function verPalpites(usuario) {
         document.getElementById('spanUser').innerText = usuario;
         const modalBody = document.getElementById('corpoModal');
@@ -120,6 +127,24 @@
 
         // 1. INICIALIZE A VARIÁVEL AQUI
         let html = ""; 
+
+        // 4. Quartas de Final
+        html += `<h6 class="text-danger mt-2 fw-bold">🔥 Quartas de Final:</h6>
+                 <div class="list-group mb-3 shadow-sm">`;
+        
+        quartas.forEach((jogo, i) => {
+            let n = i + 1;
+            // Assumindo que no seu banco os campos são q1m, q1v, q2m, q2v...
+            let palpiteM = p['q'+n+'m'] !== null ? p['q'+n+'m'] : '-';
+            let palpiteV = p['q'+n+'v'] !== null ? p['q'+n+'v'] : '-';
+            
+            html += `
+            <div class="list-group-item d-flex justify-content-between align-items-center py-2">
+                <span class="small text-truncate" style="max-width: 70%;">${jogo}</span>
+                <span class="badge bg-danger rounded-pill">${palpiteM} x ${palpiteV}</span>
+            </div>`;
+        });
+        html += `</div><hr>`;
 
         // 2. Oitavas de Final
         html += `<h6 class="text-warning mt-3 fw-bold">⚡ Oitavas de Final:</h6>
