@@ -19,8 +19,17 @@
         <div class="col-md-9">
             <h3 class="text-center mb-4">🏆 Quartas de Final</h3>
             <form id="formBolao">
-                <!-- Jogos 1 a 4 -->
-                <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">França</span> <img src="https://flagcdn.com/28x21/fr.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="q1_1" min="0" required> x <input type="number" class="input-placar mx-2" name="q1_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/ma.png" class="flag-img"> <span class="team-name ms-2">Marrocos</span></div></div>
+                <!-- Jogo 1: Bloqueado -->
+                <div class="match-card row align-items-center text-center">
+                    <div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">França</span> <img src="https://flagcdn.com/28x21/fr.png" class="flag-img"></div>
+                    <div class="col-4 d-flex justify-content-center align-items-center">
+                        <input type="number" class="input-placar mx-2" name="q1_1" disabled placeholder="-"> x 
+                        <input type="number" class="input-placar mx-2" name="q1_2" disabled placeholder="-">
+                    </div>
+                    <div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/ma.png" class="flag-img"> <span class="team-name ms-2">Marrocos</span></div>
+                </div>
+
+                <!-- Jogos 2, 3 e 4 -->
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Espanha</span> <img src="https://flagcdn.com/28x21/es.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="q2_1" min="0" required> x <input type="number" class="input-placar mx-2" name="q2_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/be.png" class="flag-img"> <span class="team-name ms-2">Bélgica</span></div></div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Noruega</span> <img src="https://flagcdn.com/28x21/no.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="q3_1" min="0" required> x <input type="number" class="input-placar mx-2" name="q3_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/gb-eng.png" class="flag-img"> <span class="team-name ms-2">Inglaterra</span></div></div>
                 <div class="match-card row align-items-center text-center"><div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Argentina</span> <img src="https://flagcdn.com/28x21/ar.png" class="flag-img"></div><div class="col-4 d-flex justify-content-center align-items-center"><input type="number" class="input-placar mx-2" name="q4_1" min="0" required> x <input type="number" class="input-placar mx-2" name="q4_2" min="0" required></div><div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/ch.png" class="flag-img"> <span class="team-name ms-2">Suiça</span></div></div>
@@ -35,28 +44,39 @@
 <script>
     const sbClient = supabase.createClient("https://phirqisfutnwqhhswjxh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY");
 
+    const jogosBloqueados = [1];
+    
     document.getElementById('formBolao').addEventListener('submit', async (e) => {
         e.preventDefault();
         
-        // Segurança: força valor 0 se alguém tentar inserir negativo via console
         document.querySelectorAll('input[type="number"]').forEach(input => { if(input.value < 0) input.value = 0; });
 
         const usuarioLogado = localStorage.getItem('bolao_user');
         
-        // Verifica se qualquer palpite desta fase já foi enviado
         const { data: usuarioData, error: erroFetch } = await sbClient
             .from('palpitescopa')
             .select('q1m, q2m, q3m, q4m')
             .eq('nome_usuario', usuarioLogado)
             .single();
 
-        if (usuarioData && (usuarioData.q1m !== null || usuarioData.q2m !== null || usuarioData.q3m !== null || usuarioData.q4m !== null)) {
+        // Verifica se qualquer jogo NÃO BLOQUEADO já possui palpite
+        let jaPalpitou = false;
+        for (let i = 1; i <= 4; i++) {
+            if (jogosBloqueados.includes(i)) continue;
+            if (usuarioData[`q${i}m`] !== null) {
+                jaPalpitou = true;
+                break;
+            }
+        }
+
+        if (jaPalpitou) {
             alert('Você já submeteu seus palpites desta fase!');
             return;
         }
 
         const payload = {};
         for (let i = 1; i <= 4; i++) {
+            if (jogosBloqueados.includes(i)) continue; // Pula o Jogo 1
             payload[`q${i}m`] = parseInt(document.querySelector(`input[name="q${i}_1"]`).value) || 0;
             payload[`q${i}v`] = parseInt(document.querySelector(`input[name="q${i}_2"]`).value) || 0;
         }
