@@ -91,6 +91,9 @@
         "França x Marrocos", "Espanha x Bélgica", 
         "Noruega x Inglaterra", "Argentina x Suíça"
     ];
+    const jogosSemifinais = [
+        "França x Espanha", "Inglaterra x Argentina"
+    ];    
 
     document.addEventListener("DOMContentLoaded", async () => {
         const usuarioLogado = localStorage.getItem("bolao_user");
@@ -200,6 +203,26 @@
                     html += `
                     <div class="row text-center border-bottom py-1">
                         <div class="col-8 text-start small">${jogosQuartas[i-1]}</div>
+                        <div class="col-4">${displayPlacar}</div>
+                    </div>`;
+                }
+            html += `</div></div>`;
+
+            // 5.5 Semifinais
+            html += `
+            <button class="btn btn-outline-success w-100 mb-2" data-bs-toggle="collapse" data-bs-target="#palpitesSemis">
+                ⬇️ Palpites: Semifinais
+            </button>
+            <div class="collapse mb-3" id="palpitesSemis">
+                <div class="bg-white p-3 border rounded shadow-sm">`;
+                for (let i = 1; i <= 2; i++) {
+                    let m = p[`s${i}m`];
+                    let v = p[`s${i}v`];
+                    let displayPlacar = (m === null || v === null) ? '<span class="nao-palpitou">Não palpitou</span>' : `<b>${m} x ${v}</b>`;
+                    
+                    html += `
+                    <div class="row text-center border-bottom py-1">
+                        <div class="col-8 text-start small">${jogosSemifinais[i-1]}</div>
                         <div class="col-4">${displayPlacar}</div>
                     </div>`;
                 }
