@@ -19,17 +19,17 @@
         <div class="col-md-9">
             <h3 class="text-center mb-4">🏆 Semifinais</h3>
             <form id="formBolao">
-                <!-- Jogo 1: França x Espanha -->
+                <!-- Jogo 1: Bloqueado -->
                 <div class="match-card row align-items-center text-center">
                     <div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">França</span> <img src="https://flagcdn.com/28x21/fr.png" class="flag-img"></div>
                     <div class="col-4 d-flex justify-content-center align-items-center">
-                        <input type="number" class="input-placar mx-2" name="s1_1" min="0" required> x 
-                        <input type="number" class="input-placar mx-2" name="s1_2" min="0" required>
+                        <input type="number" class="input-placar mx-2" disabled placeholder="-"> x 
+                        <input type="number" class="input-placar mx-2" disabled placeholder="-">
                     </div>
                     <div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/es.png" class="flag-img"> <span class="team-name ms-2">Espanha</span></div>
                 </div>
 
-                <!-- Jogo 2: Inglaterra x Argentina -->
+                <!-- Jogo 2: Ativo -->
                 <div class="match-card row align-items-center text-center">
                     <div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Inglaterra</span> <img src="https://flagcdn.com/28x21/gb-eng.png" class="flag-img"></div>
                     <div class="col-4 d-flex justify-content-center align-items-center">
@@ -54,21 +54,20 @@
         
         const usuarioLogado = localStorage.getItem('bolao_user');
         
-        // Verifica se já palpitou (usando s1m como referência)
+        // Verifica se já palpitou no Jogo 2 (o único editável)
         const { data: usuarioData } = await sbClient
             .from('palpitescopa')
-            .select('s1m')
+            .select('s2m')
             .eq('nome_usuario', usuarioLogado)
             .single();
 
-        if (usuarioData && usuarioData.s1m !== null) {
-            alert('Você já submeteu seus palpites das semifinais!');
+        if (usuarioData && usuarioData.s2m !== null) {
+            alert('Você já submeteu seu palpite para a semifinal disponível!');
             return;
         }
 
+        // Envia apenas o que é permitido (Jogo 2)
         const payload = {
-            s1m: parseInt(document.querySelector('input[name="s1_1"]').value) || 0,
-            s1v: parseInt(document.querySelector('input[name="s1_2"]').value) || 0,
             s2m: parseInt(document.querySelector('input[name="s2_1"]').value) || 0,
             s2v: parseInt(document.querySelector('input[name="s2_2"]').value) || 0
         };
@@ -81,7 +80,7 @@
         if (error) {
             alert('Erro ao salvar: ' + error.message);
         } else {
-            alert('Palpites das semifinais enviados!');
+            alert('Palpite enviado com sucesso!');
             window.location.href = 'menu.html';
         }
     });
