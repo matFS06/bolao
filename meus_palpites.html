@@ -95,6 +95,10 @@
         "França x Espanha", "Inglaterra x Argentina"
     ];    
 
+    const jogosFinais = [
+        "França x Inglaterra (3º Lugar)", "Espanha x Argentina (Final)"
+    ];
+
     document.addEventListener("DOMContentLoaded", async () => {
         const usuarioLogado = localStorage.getItem("bolao_user");
         if (!usuarioLogado) { window.location.href = "./index.html"; return; }
@@ -227,6 +231,24 @@
                     </div>`;
                 }
             html += `</div></div>`;
+
+            // 6. Finais (Disputa 3º e Grande Final)
+            html += `
+            <button class="btn btn-outline-dark w-100 mb-2 mt-2" data-bs-toggle="collapse" data-bs-target="#palpitesFinais">
+                ⬇️ Palpites: Finais
+            </button>
+            <div class="collapse mb-3" id="palpitesFinais">
+                <div class="bg-white p-3 border rounded shadow-sm">
+                    <div class="row text-center border-bottom py-1">
+                        <div class="col-8 text-start small">3º Lugar: França x Inglaterra</div>
+                        <div class="col-4">${(p.f1m === null) ? '<span class="nao-palpitou">Não palpitou</span>' : `<b>${p.f1m} x ${p.f1v}</b>`}</div>
+                    </div>
+                    <div class="row text-center border-bottom py-1">
+                        <div class="col-8 text-start small">Final: Espanha x Argentina</div>
+                        <div class="col-4">${(p.f2m === null) ? '<span class="nao-palpitou">Não palpitou</span>' : `<b>${p.f2m} x ${p.f2v}</b>`}</div>
+                    </div>
+                </div>
+            </div>`;
 
             // 6. Colocações
             html += `
