@@ -55,7 +55,7 @@
         
         const usuarioLogado = localStorage.getItem('bolao_user');
         
-        // Verifica se já palpitou (usando f1m como referência)
+        // Verifica se já palpitou no banco (usando f1m como chave)
         const { data: usuarioData } = await sbClient
             .from('palpitescopa')
             .select('f1m')
