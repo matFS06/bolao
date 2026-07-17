@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Bolão 2026 - Finais</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f0f2f5; font-family: 'Segoe UI', sans-serif; }
+        .match-card { background: white; border-radius: 12px; padding: 12px 20px; margin-bottom: 10px; transition: all 0.3s; border-left: 5px solid #0d6efd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .input-placar { width: 50px; height: 50px; text-align: center; border: 2px solid #ddd; border-radius: 8px; font-weight: bold; font-size: 1.2rem; }
+        .team-name { font-weight: 600; font-size: 0.95rem; }
+        .flag-img { width: 28px; height: 20px; border-radius: 2px; }
+    </style>
+</head>
+<body class="py-5">
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-9">
+            <h3 class="text-center mb-4">🏆 Finais da Copa</h3>
+            <form id="formBolao">
+                
+                <!-- Jogo 1: Disputa 3º Lugar (França x Inglaterra) -->
+                <div class="match-card row align-items-center text-center">
+                    <div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">França</span> <img src="https://flagcdn.com/28x21/fr.png" class="flag-img"></div>
+                    <div class="col-4 d-flex justify-content-center align-items-center">
+                        <input type="number" class="input-placar mx-2" name="f1_1" min="0" required> x 
+                        <input type="number" class="input-placar mx-2" name="f1_2" min="0" required>
+                    </div>
+                    <div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/gb-eng.png" class="flag-img"> <span class="team-name ms-2">Inglaterra</span></div>
+                </div>
+
+                <!-- Jogo 2: Grande Final (Espanha x Argentina) -->
+                <div class="match-card row align-items-center text-center">
+                    <div class="col-4 d-flex justify-content-end align-items-center"><span class="team-name me-2">Espanha</span> <img src="https://flagcdn.com/28x21/es.png" class="flag-img"></div>
+                    <div class="col-4 d-flex justify-content-center align-items-center">
+                        <input type="number" class="input-placar mx-2" name="f2_1" min="0" required> x 
+                        <input type="number" class="input-placar mx-2" name="f2_2" min="0" required>
+                    </div>
+                    <div class="col-4 d-flex justify-content-start align-items-center"><img src="https://flagcdn.com/28x21/ar.png" class="flag-img"> <span class="team-name ms-2">Argentina</span></div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">Confirmar Palpites Finais</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+    const sbClient = supabase.createClient("https://phirqisfutnwqhhswjxh.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBoaXJxaXNmdXRud3FoaHN3anhoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAzNDk0NTMsImV4cCI6MjA5NTkyNTQ1M30.cMAmQiU5rk2-sc6K-KR0-is_ov855BnnA7a4ioCNKcY");
+
+    document.getElementById('formBolao').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const usuarioLogado = localStorage.getItem('bolao_user');
+        
+        // Verifica se já palpitou (usando f1m como referência)
+        const { data: usuarioData } = await sbClient
+            .from('palpitescopa')
+            .select('f1m')
+            .eq('nome_usuario', usuarioLogado)
+            .single();
+
+        if (usuarioData && usuarioData.f1m !== null) {
+            alert('Você já submeteu seus palpites para as finais!');
+            return;
+        }
+
+        const payload = {
+            f1m: parseInt(document.querySelector('input[name="f1_1"]').value) || 0,
+            f1v: parseInt(document.querySelector('input[name="f1_2"]').value) || 0,
+            f2m: parseInt(document.querySelector('input[name="f2_1"]').value) || 0,
+            f2v: parseInt(document.querySelector('input[name="f2_2"]').value) || 0
+        };
+
+        const { error } = await sbClient
+            .from('palpitescopa')
+            .update(payload)
+            .eq('nome_usuario', usuarioLogado);
+
+        if (error) {
+            alert('Erro ao salvar: ' + error.message);
+        } else {
+            alert('Palpites das finais enviados com sucesso!');
+            window.location.href = 'menu.html';
+        }
+    });
+</script>
+</body>
+</html>
