@@ -116,6 +116,11 @@
         "Inglaterra x Argentina"
     ];
 
+    const finais = [
+        "França x Inglaterra", // Disputa 3º Lugar
+        "Espanha x Argentina"  // Grande Final
+    ];
+    
     async function verPalpites(usuario) {
         document.getElementById('spanUser').innerText = usuario;
         const modalBody = document.getElementById('corpoModal');
@@ -132,6 +137,24 @@
 
         // 1. INICIALIZE A VARIÁVEL AQUI
         let html = ""; 
+
+        // 3.0 Finais (ADICIONE ESTE BLOCO)
+        html += `<h6 class="text-primary mt-3 fw-bold">🏆 Finais:</h6>
+                 <div class="list-group mb-3 shadow-sm">`;
+        
+        finais.forEach((jogo, i) => {
+            let n = i + 1;
+            // Busca nas colunas f1m, f1v, f2m, f2v
+            let palpiteM = p['f'+n+'m'] !== null ? p['f'+n+'m'] : '-';
+            let palpiteV = p['f'+n+'v'] !== null ? p['f'+n+'v'] : '-';
+            
+            html += `
+            <div class="list-group-item d-flex justify-content-between align-items-center py-2">
+                <span class="small text-truncate" style="max-width: 70%;">${jogo}</span>
+                <span class="badge bg-primary rounded-pill">${palpiteM} x ${palpiteV}</span>
+            </div>`;
+        });
+        html += `</div><hr>`;
 
         // 3.5 Semifinais (ADICIONE ESTE BLOCO)
         html += `<h6 class="text-success mt-3 fw-bold">🏆 Semifinais:</h6>
